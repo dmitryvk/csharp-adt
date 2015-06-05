@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.5.0.2 ADL.g 2015-06-03 00:29:35
+// $ANTLR 3.5.0.2 ADL.g 2015-06-06 01:03:03
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -34,7 +34,7 @@ namespace  adt
 public partial class ADLParser : Antlr.Runtime.Parser
 {
 	internal static readonly string[] tokenNames = new string[] {
-		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ASTERISK", "ATTRIBUTES", "CLOSE", "COMMA", "COMMENT", "COMMON_ATTRIBUTES", "DOT", "EQ", "ID", "ID_LETTER", "ID_START_LETTER", "NAMESPACE", "OPEN", "PIPE", "QUESTION", "QUOTED_TYPE", "SEMI", "WS"
+		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ASTERISK", "ATTRIBUTES", "CLOSE", "COMMA", "COMMENT", "COMMON_ATTRIBUTES", "DOT", "EQ", "ID", "ID_LETTER", "ID_START_LETTER", "NAMESPACE", "OPEN", "PIPE", "QUESTION", "QUOTED_TEXT", "SEMI", "WS"
 	};
 	public const int EOF=-1;
 	public const int ASTERISK=4;
@@ -52,7 +52,7 @@ public partial class ADLParser : Antlr.Runtime.Parser
 	public const int OPEN=16;
 	public const int PIPE=17;
 	public const int QUESTION=18;
-	public const int QUOTED_TYPE=19;
+	public const int QUOTED_TEXT=19;
 	public const int SEMI=20;
 	public const int WS=21;
 
@@ -1269,7 +1269,7 @@ public partial class ADLParser : Antlr.Runtime.Parser
 	partial void EnterRule_attrType();
 	partial void LeaveRule_attrType();
 	// $ANTLR start "attrType"
-	// ADL.g:79:1: attrType returns [string r] : (id1= ID ( DOT id2= ID )* | QUOTED_TYPE );
+	// ADL.g:79:1: attrType returns [string r] : (id1= ID ( DOT id2= ID )* | QUOTED_TEXT );
 	[GrammarRule("attrType")]
 	private string attrType()
 	{
@@ -1281,13 +1281,13 @@ public partial class ADLParser : Antlr.Runtime.Parser
 
 		IToken id1 = default(IToken);
 		IToken id2 = default(IToken);
-		IToken QUOTED_TYPE15 = default(IToken);
+		IToken QUOTED_TEXT15 = default(IToken);
 
 		try { DebugEnterRule(GrammarFileName, "attrType");
 		DebugLocation(79, 88);
 		try
 		{
-			// ADL.g:80:5: (id1= ID ( DOT id2= ID )* | QUOTED_TYPE )
+			// ADL.g:80:5: (id1= ID ( DOT id2= ID )* | QUOTED_TEXT )
 			int alt16=2;
 			try { DebugEnterDecision(16, false);
 			int LA16_1 = input.LA(1);
@@ -1296,7 +1296,7 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			{
 				alt16 = 1;
 			}
-			else if ((LA16_1==QUOTED_TYPE))
+			else if ((LA16_1==QUOTED_TEXT))
 			{
 				alt16 = 2;
 			}
@@ -1364,12 +1364,12 @@ public partial class ADLParser : Antlr.Runtime.Parser
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ADL.g:81:7: QUOTED_TYPE
+				// ADL.g:81:7: QUOTED_TEXT
 				{
 				DebugLocation(81, 7);
-				QUOTED_TYPE15=(IToken)Match(input,QUOTED_TYPE,Follow._QUOTED_TYPE_in_attrType491); 
+				QUOTED_TEXT15=(IToken)Match(input,QUOTED_TEXT,Follow._QUOTED_TEXT_in_attrType491); 
 				DebugLocation(81, 19);
-				 r = (QUOTED_TYPE15!=null?QUOTED_TYPE15.Text:default(string)).Substring(1, (QUOTED_TYPE15!=null?QUOTED_TYPE15.Text:default(string)).Length - 2); 
+				 r = (QUOTED_TEXT15!=null?QUOTED_TEXT15.Text:default(string)).Substring(1, (QUOTED_TEXT15!=null?QUOTED_TEXT15.Text:default(string)).Length - 2); 
 
 				}
 				break;
@@ -1446,7 +1446,7 @@ public partial class ADLParser : Antlr.Runtime.Parser
 		public static readonly BitSet _ID_in_attrType470 = new BitSet(new ulong[]{0x402UL});
 		public static readonly BitSet _DOT_in_attrType475 = new BitSet(new ulong[]{0x1000UL});
 		public static readonly BitSet _ID_in_attrType479 = new BitSet(new ulong[]{0x402UL});
-		public static readonly BitSet _QUOTED_TYPE_in_attrType491 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _QUOTED_TEXT_in_attrType491 = new BitSet(new ulong[]{0x2UL});
 	}
 	#endregion Follow sets
 }

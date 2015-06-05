@@ -14,6 +14,7 @@ using adt.ADL;
 using System.Collections.Generic;
 using Antlr.Runtime;
 using Antlr.Runtime.Misc;
+using System;
 
 namespace adt
 {
@@ -21,6 +22,7 @@ namespace adt
     {
         public override void ReportError(RecognitionException e)
         {
+            Console.WriteLine("Error {3} at {0}:{1}: {2} near {4}", e.Line, e.CharPositionInLine, e.Message, e.GetType().FullName, e.Token.Text);
             throw e;
         }
     }

@@ -78,9 +78,9 @@ attributeDecl returns [AttributeDecl r]
 
 attrType returns [string r]
     : id1=ID { $r = $id1.text; } (DOT id2=ID { $r = $r + "." + $id2.text; })*
-    | QUOTED_TYPE { $r = $QUOTED_TYPE.text.Substring(1, $QUOTED_TYPE.text.Length - 2); };
+    | QUOTED_TEXT { $r = $QUOTED_TEXT.text.Substring(1, $QUOTED_TEXT.text.Length - 2); };
     
-QUOTED_TYPE
+QUOTED_TEXT
     : '"' (options { greedy = false; }: ~'"')* '"';
 
 NAMESPACE: '@namespace';

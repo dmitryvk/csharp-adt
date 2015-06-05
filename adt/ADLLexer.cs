@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.5.0.2 ADL.g 2015-06-03 00:29:36
+// $ANTLR 3.5.0.2 ADL.g 2015-06-06 01:03:04
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -46,7 +46,7 @@ public partial class ADLLexer : Antlr.Runtime.Lexer
 	public const int OPEN=16;
 	public const int PIPE=17;
 	public const int QUESTION=18;
-	public const int QUOTED_TYPE=19;
+	public const int QUOTED_TEXT=19;
 	public const int SEMI=20;
 	public const int WS=21;
 
@@ -76,19 +76,19 @@ public partial class ADLLexer : Antlr.Runtime.Lexer
 	partial void EnterRule(string ruleName, int ruleIndex);
 	partial void LeaveRule(string ruleName, int ruleIndex);
 
-	partial void EnterRule_QUOTED_TYPE();
-	partial void LeaveRule_QUOTED_TYPE();
+	partial void EnterRule_QUOTED_TEXT();
+	partial void LeaveRule_QUOTED_TEXT();
 
-	// $ANTLR start "QUOTED_TYPE"
-	[GrammarRule("QUOTED_TYPE")]
-	private void mQUOTED_TYPE()
+	// $ANTLR start "QUOTED_TEXT"
+	[GrammarRule("QUOTED_TEXT")]
+	private void mQUOTED_TEXT()
 	{
-		EnterRule_QUOTED_TYPE();
-		EnterRule("QUOTED_TYPE", 1);
-		TraceIn("QUOTED_TYPE", 1);
+		EnterRule_QUOTED_TEXT();
+		EnterRule("QUOTED_TEXT", 1);
+		TraceIn("QUOTED_TEXT", 1);
 		try
 		{
-			int _type = QUOTED_TYPE;
+			int _type = QUOTED_TEXT;
 			int _channel = DefaultTokenChannel;
 			// ADL.g:84:5: ( '\"' ( options {greedy=false; } :~ '\"' )* '\"' )
 			DebugEnterAlt(1);
@@ -149,12 +149,12 @@ public partial class ADLLexer : Antlr.Runtime.Lexer
 		}
 		finally
 		{
-			TraceOut("QUOTED_TYPE", 1);
-			LeaveRule("QUOTED_TYPE", 1);
-			LeaveRule_QUOTED_TYPE();
+			TraceOut("QUOTED_TEXT", 1);
+			LeaveRule("QUOTED_TEXT", 1);
+			LeaveRule_QUOTED_TEXT();
 		}
 	}
-	// $ANTLR end "QUOTED_TYPE"
+	// $ANTLR end "QUOTED_TEXT"
 
 	partial void EnterRule_NAMESPACE();
 	partial void LeaveRule_NAMESPACE();
@@ -1133,7 +1133,7 @@ public partial class ADLLexer : Antlr.Runtime.Lexer
 
 	public override void mTokens()
 	{
-		// ADL.g:1:8: ( QUOTED_TYPE | NAMESPACE | ATTRIBUTES | COMMON_ATTRIBUTES | QUESTION | ASTERISK | DOT | PIPE | SEMI | WS | COMMENT | ID | EQ | OPEN | CLOSE | COMMA )
+		// ADL.g:1:8: ( QUOTED_TEXT | NAMESPACE | ATTRIBUTES | COMMON_ATTRIBUTES | QUESTION | ASTERISK | DOT | PIPE | SEMI | WS | COMMENT | ID | EQ | OPEN | CLOSE | COMMA )
 		int alt9=16;
 		try { DebugEnterDecision(9, false);
 		int LA9_1 = input.LA(1);
@@ -1229,10 +1229,10 @@ public partial class ADLLexer : Antlr.Runtime.Lexer
 		{
 		case 1:
 			DebugEnterAlt(1);
-			// ADL.g:1:10: QUOTED_TYPE
+			// ADL.g:1:10: QUOTED_TEXT
 			{
 			DebugLocation(1, 10);
-			mQUOTED_TYPE(); 
+			mQUOTED_TEXT(); 
 
 			}
 			break;
