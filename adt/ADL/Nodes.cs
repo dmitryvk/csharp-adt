@@ -9,12 +9,18 @@ namespace adt.ADL
     public class ProgramDecl
     {
         public NamespaceDecl ns;
+        public WalkerDecl walker;
         public List<NodeDecl> nodes = new List<NodeDecl>();
     }
 
     public class NamespaceDecl
     {
         public List<string> ids = new List<string>();
+    }
+
+    public class WalkerDecl
+    {
+        public string name;
     }
 
     public abstract class NodeDecl

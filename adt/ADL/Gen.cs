@@ -72,6 +72,10 @@ namespace adt.ADL
             {
                 genNode(ctx, node);
             }
+            if (program.walker != null)
+            {
+                genWalker(ctx, program);
+            }
             ctx.DecreaseIndent();
             ctx.Appendfnl("}}");
         }
@@ -190,7 +194,7 @@ namespace adt.ADL
                     ctx.IncreaseIndent();
                     if (field.many)
                     {
-                        ctx.Appendfnl("this.{0} = new {1}()", field.id, FieldToCsharpType(ctx, field));
+                        ctx.Appendfnl("this.{0} = new {1}();", field.id, FieldToCsharpType(ctx, field));
                     }
                     ctx.DecreaseIndent();
                 }
@@ -246,7 +250,7 @@ namespace adt.ADL
                     ctx.IncreaseIndent();
                     if (field.many)
                     {
-                        ctx.Appendfnl("this.{0} = new {1}()", field.id, FieldToCsharpType(ctx, field));
+                        ctx.Appendfnl("this.{0} = new {1}();", field.id, FieldToCsharpType(ctx, field));
                     }
                     ctx.DecreaseIndent();
                 }
@@ -286,6 +290,110 @@ namespace adt.ADL
                 type = "global::System.Collections.Generic.List<" + type + ">";
             }
             return type;
+        }
+
+        private static void genWalker(GenContext ctx, ProgramDecl program)
+        {
+            ctx.Appendfnl("public class {0}", program.walker.name);
+            ctx.Appendfnl("{{");
+            ctx.IncreaseIndent();
+            foreach (var node in program.nodes)
+            {
+                if (node is NodeVariantsDecl)
+                {
+                    genWalkerVariants(ctx, (NodeVariantsDecl)node);
+                }
+                else
+                {
+                    genWalkerConcrete(ctx, (NodeConcreteDecl)node);
+                }
+            }
+            ctx.DecreaseIndent();
+            ctx.Appendfnl("}}");
+        }
+
+        private static void genWalkerConcrete(GenContext ctx, NodeConcreteDecl nodeConcreteDecl)
+        {
+            ctx.Appendfnl("public virtual void walk{0}({1} __node)", nodeConcreteDecl.id, ToNs(ctx, nodeConcreteDecl.id));
+            ctx.Appendfnl("{{");
+            ctx.IncreaseIndent();
+            var nodeName = nodeConcreteDecl.id;
+            foreach (var field in nodeConcreteDecl.fields)
+            {
+                genWalkerField(ctx, nodeName, field);
+            }
+            ctx.DecreaseIndent();
+            ctx.Appendfnl("}}");
+        }
+
+        private static void genWalkerField(GenContext ctx, string nodeName, FieldDecl field)
+        {
+            if (field.many)
+            {
+                ctx.Appendfnl("foreach (var __child in __node.{0})", field.id);
+                ctx.Appendfnl("{{");
+                ctx.IncreaseIndent();
+                ctx.Appendfnl("this.walk{0}(__child);", field.type, field.id);
+                ctx.DecreaseIndent();
+                ctx.Appendfnl("}}");
+            }
+            else
+            {
+                if (!field.optional)
+                {
+                    ctx.Appendfnl("if (__node.{0} == null)", field.id);
+                    ctx.Appendfnl("{{");
+                    ctx.IncreaseIndent();
+                    ctx.Appendfnl("throw new global::System.InvalidOperationException(\"Required field {0} of node {1} is empty\");", field.id, nodeName);
+                    ctx.DecreaseIndent();
+                    ctx.Appendfnl("}}");
+                }
+                ctx.Appendfnl("if (__node.{0} != null)", field.id);
+                ctx.Appendfnl("{{");
+                ctx.IncreaseIndent();
+                ctx.Appendfnl("this.walk{0}(__node.{1});", field.type, field.id);
+                ctx.DecreaseIndent();
+                ctx.Appendfnl("}}");
+            }
+        }
+
+        private static void genWalkerVariants(GenContext ctx, NodeVariantsDecl node)
+        {
+            ctx.Appendfnl("public virtual void walk{0}({1} __node)", node.id, ToNs(ctx, node.id));
+            ctx.Appendfnl("{{");
+            ctx.IncreaseIndent();
+            ctx.Appendfnl("__node.Match");
+            ctx.Appendfnl("(");
+            ctx.IncreaseIndent();
+            for (var i = 0; i < node.variants.Count; ++i)
+            {
+                var isLast = i == node.variants.Count - 1;
+                var variant = node.variants[i];
+                ctx.Appendfnl("walk{0}{1}", variant.id, isLast ? "" : ",");
+            }
+            ctx.DecreaseIndent();
+            ctx.Appendfnl(");");
+            ctx.DecreaseIndent();
+            ctx.Appendfnl("}}");
+
+            foreach (var variant in node.variants)
+            {
+                genWalkerVariants(ctx, variant);
+            }
+        }
+
+        private static void genWalkerVariants(GenContext ctx, NodeVariantDecl variant)
+        {
+            ctx.Appendfnl("public virtual void walk{0}({1} __node)", variant.id, ToNs(ctx, variant.id));
+            ctx.Appendfnl("{{");
+            ctx.IncreaseIndent();
+            var nodeName = variant.id;
+            foreach (var field in variant.fields)
+            {
+                genWalkerField(ctx, nodeName, field);
+            }
+            ctx.DecreaseIndent();
+            ctx.Appendfnl("}}");
         }
     }
 }

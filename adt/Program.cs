@@ -33,6 +33,7 @@ namespace adt
         {
             var lexer = new ADLLexer(new ANTLRStringStream(@"
 @namespace Foo.Bar.Baz;
+@walker BaseWalker;
 
 foo = bar(foo x) @attributes string y | quux() @common_attributes ""List<int>"" nums;
 

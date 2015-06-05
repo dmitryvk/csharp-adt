@@ -15,6 +15,7 @@ using adt.ADL;
 
 public program returns [ProgramDecl r]
     : namespaceDecl  { $r = new ProgramDecl { ns = $namespaceDecl.r }; }
+    (walkerDecl { $r.walker = $walkerDecl.r; })?
     (node
         {
             $r.nodes.Add($node.r);
@@ -24,6 +25,11 @@ public program returns [ProgramDecl r]
 namespaceDecl returns [NamespaceDecl r]
 @init { $r = new NamespaceDecl(); }
     : NAMESPACE id1=ID { $r.ids.Add($id1.text); } (DOT id2=ID { $r.ids.Add($id2.text); })* SEMI;
+
+walkerDecl returns [WalkerDecl r]
+    : WALKER ID SEMI
+    { $r = new WalkerDecl { name = $ID.text }; }
+    ;
 
 node returns [NodeDecl r]
     : nodeVariants { $r = $nodeVariants.r; } | nodeConcrete { $r = $nodeConcrete.r; };
@@ -84,6 +90,7 @@ QUOTED_TEXT
     : '"' (options { greedy = false; }: ~'"')* '"';
 
 NAMESPACE: '@namespace';
+WALKER: '@walker';
 
 ATTRIBUTES: '@attributes';
 COMMON_ATTRIBUTES: '@common_attributes';
