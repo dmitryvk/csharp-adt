@@ -1,0 +1,68 @@
+node_variants Statement =
+    SelectStatement Query:Query
+    | UpdateStatement Versioned:bool  From:FromClause  Set:SetClause  Where:WhereClause
+    | DeleteStatement From:FromClause  Where:WhereClause
+    | InsertStatement Into:IntoClause  Query:Query;
+
+node IntoClause = IntoPath:Path  Properties:List<Identifier>;
+
+node_variants Path = PathId Value:Identifier | PathDot PrevPath:Path Next:Identifier;
+
+node Identifier = Name:string;
+
+node SetClause = Assignments:List<Assignment>;
+
+node Assignment = Property:PropertyRef  NewValue:NewValueAssignment;
+
+node_variants NewValueAssignment = 
+    NewValueExpr Expression:Expr
+    | NewValueQuery Query:Query;
+
+node_variants Query =
+    BaseQuery From:FromClause  Select:SelectClause  Where:WhereClause  Group:GroupClause  Having:HavingClause  Order:OrderClause  Skip:SkipClause  Take:TakeClause
+    | QueryUnion LHS:BaseQuery RHS:Query;
+
+node_variants OrderClause =
+    OrderClauseExprs Exprs:List<OrderClauseExpr>
+    | OrderClauseQuery Query:Query  IsAscending:bool;
+
+node OrderClauseExpr = Expression:OrderExpr  IsAscending:bool;
+
+node_variants OrderExpr =
+    OrderExprResultRef Var:Identifier
+    | OrderExprExpr Expression:Expr;
+
+node_variants SkipClause = SkipConst Count:NumberLiteral | SkipParameter Value:Parameter;
+
+node NumberLiteral = Value:long;
+
+node_variants TakeClause = TakeConst Count:NumberLiteral | TakeParameter Value:Parameter;
+
+node GroupClause = Expressions:List<Expr>;
+
+node HavingClause = Expression:Expr;
+
+node SelectClause = Distinct:bool  Expressions:List<SelectClauseItem>;
+
+node_variants SelectClauseItem = SelectClauseExpr Expr:SelectExpr | AliasedSelectClauseExpr Expr:SelectExpr  Alias:Identifier;
+
+node_variants SelectExpr =
+    SelectExprProperty Property:PropertyRef
+    | SelectExprExpr Expr:NumberLiteral;
+
+node_variants Expr = ConstantExpr Value:Constant;
+
+node_variants Constant = IntegerConstant Value:int;
+
+node FromClause = JoinTree:JoinTreeNode;
+
+node_variants JoinTreeNode = 
+    Range Value:Path Alias:Identifier
+    | CrossJoin LHS:JoinTreeNode RHS:JoinTreeNode 
+    | Join JoinType:int LHS:JoinTreeNode RHS:JoinTreeNode Predicate:Expr;
+    
+node Parameter = Name:Identifier;
+
+node PropertyRef = Name:Identifier;
+
+node WhereClause = Predicate:Expr;
