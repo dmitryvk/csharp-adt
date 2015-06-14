@@ -9,7 +9,9 @@ namespace adt.ADL
     public class ProgramDecl
     {
         public NamespaceDecl ns;
+        public BaseClassDecl baseClass;
         public WalkerDecl walker;
+        public PrinterDecl printer;
         public List<NodeDecl> nodes = new List<NodeDecl>();
     }
 
@@ -18,9 +20,20 @@ namespace adt.ADL
         public List<string> ids = new List<string>();
     }
 
+    public class BaseClassDecl
+    {
+        public string name;
+    }
+
     public class WalkerDecl
     {
         public string name;
+    }
+
+    public class PrinterDecl
+    {
+        public string name;
+        public string root;
     }
 
     public abstract class NodeDecl
@@ -59,5 +72,6 @@ namespace adt.ADL
     {
         public string id;
         public string type;
+        public bool printed;
     }
 }

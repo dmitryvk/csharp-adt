@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.5.0.2 ADL.g 2015-06-06 01:26:22
+// $ANTLR 3.5.0.2 ADL.g 2015-06-14 19:14:16
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 219
@@ -34,28 +34,31 @@ namespace  adt
 public partial class ADLParser : Antlr.Runtime.Parser
 {
 	internal static readonly string[] tokenNames = new string[] {
-		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ASTERISK", "ATTRIBUTES", "CLOSE", "COMMA", "COMMENT", "COMMON_ATTRIBUTES", "DOT", "EQ", "ID", "ID_LETTER", "ID_START_LETTER", "NAMESPACE", "OPEN", "PIPE", "QUESTION", "QUOTED_TEXT", "SEMI", "WALKER", "WS"
+		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ASTERISK", "ATTRIBUTES", "BASE_CLASS", "CLOSE", "COMMA", "COMMENT", "COMMON_ATTRIBUTES", "DOT", "EQ", "ID", "ID_LETTER", "ID_START_LETTER", "NAMESPACE", "OPEN", "PIPE", "PRINTED", "PRINTER", "QUESTION", "QUOTED_TEXT", "SEMI", "WALKER", "WS"
 	};
 	public const int EOF=-1;
 	public const int ASTERISK=4;
 	public const int ATTRIBUTES=5;
-	public const int CLOSE=6;
-	public const int COMMA=7;
-	public const int COMMENT=8;
-	public const int COMMON_ATTRIBUTES=9;
-	public const int DOT=10;
-	public const int EQ=11;
-	public const int ID=12;
-	public const int ID_LETTER=13;
-	public const int ID_START_LETTER=14;
-	public const int NAMESPACE=15;
-	public const int OPEN=16;
-	public const int PIPE=17;
-	public const int QUESTION=18;
-	public const int QUOTED_TEXT=19;
-	public const int SEMI=20;
-	public const int WALKER=21;
-	public const int WS=22;
+	public const int BASE_CLASS=6;
+	public const int CLOSE=7;
+	public const int COMMA=8;
+	public const int COMMENT=9;
+	public const int COMMON_ATTRIBUTES=10;
+	public const int DOT=11;
+	public const int EQ=12;
+	public const int ID=13;
+	public const int ID_LETTER=14;
+	public const int ID_START_LETTER=15;
+	public const int NAMESPACE=16;
+	public const int OPEN=17;
+	public const int PIPE=18;
+	public const int PRINTED=19;
+	public const int PRINTER=20;
+	public const int QUESTION=21;
+	public const int QUOTED_TEXT=22;
+	public const int SEMI=23;
+	public const int WALKER=24;
+	public const int WS=25;
 
 	public ADLParser(ITokenStream input)
 		: this(input, new RecognizerSharedState())
@@ -79,7 +82,7 @@ public partial class ADLParser : Antlr.Runtime.Parser
 	partial void EnterRule_program();
 	partial void LeaveRule_program();
 	// $ANTLR start "program"
-	// ADL.g:16:8: public program returns [ProgramDecl r] : namespaceDecl ( walkerDecl )? ( node )+ EOF ;
+	// ADL.g:16:8: public program returns [ProgramDecl r] : namespaceDecl baseClassDecl ( walkerDecl )? ( printerDecl )? ( node )+ EOF ;
 	[GrammarRule("program")]
 	public ProgramDecl program()
 	{
@@ -90,16 +93,18 @@ public partial class ADLParser : Antlr.Runtime.Parser
 
 
 		NamespaceDecl namespaceDecl1 = default(NamespaceDecl);
-		WalkerDecl walkerDecl2 = default(WalkerDecl);
-		NodeDecl node3 = default(NodeDecl);
+		BaseClassDecl baseClassDecl2 = default(BaseClassDecl);
+		WalkerDecl walkerDecl3 = default(WalkerDecl);
+		PrinterDecl printerDecl4 = default(PrinterDecl);
+		NodeDecl node5 = default(NodeDecl);
 
 		try { DebugEnterRule(GrammarFileName, "program");
 		DebugLocation(16, 10);
 		try
 		{
-			// ADL.g:17:5: ( namespaceDecl ( walkerDecl )? ( node )+ EOF )
+			// ADL.g:17:5: ( namespaceDecl baseClassDecl ( walkerDecl )? ( printerDecl )? ( node )+ EOF )
 			DebugEnterAlt(1);
-			// ADL.g:17:7: namespaceDecl ( walkerDecl )? ( node )+ EOF
+			// ADL.g:17:7: namespaceDecl baseClassDecl ( walkerDecl )? ( printerDecl )? ( node )+ EOF
 			{
 			DebugLocation(17, 7);
 			PushFollow(Follow._namespaceDecl_in_program57);
@@ -109,7 +114,14 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			DebugLocation(17, 22);
 			 r = new ProgramDecl { ns = namespaceDecl1 }; 
 			DebugLocation(18, 5);
-			// ADL.g:18:5: ( walkerDecl )?
+			PushFollow(Follow._baseClassDecl_in_program66);
+			baseClassDecl2=baseClassDecl();
+			PopFollow();
+
+			DebugLocation(18, 19);
+			 r.baseClass = baseClassDecl2; 
+			DebugLocation(19, 5);
+			// ADL.g:19:5: ( walkerDecl )?
 			int alt1=2;
 			try { DebugEnterSubRule(1);
 			try { DebugEnterDecision(1, false);
@@ -124,15 +136,15 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ADL.g:18:6: walkerDecl
+				// ADL.g:19:6: walkerDecl
 				{
-				DebugLocation(18, 6);
-				PushFollow(Follow._walkerDecl_in_program67);
-				walkerDecl2=walkerDecl();
+				DebugLocation(19, 6);
+				PushFollow(Follow._walkerDecl_in_program75);
+				walkerDecl3=walkerDecl();
 				PopFollow();
 
-				DebugLocation(18, 17);
-				 r.walker = walkerDecl2; 
+				DebugLocation(19, 17);
+				 r.walker = walkerDecl3; 
 
 				}
 				break;
@@ -140,59 +152,91 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(1); }
 
-			DebugLocation(19, 5);
-			// ADL.g:19:5: ( node )+
-			int cnt2=0;
+			DebugLocation(20, 5);
+			// ADL.g:20:5: ( printerDecl )?
+			int alt2=2;
 			try { DebugEnterSubRule(2);
+			try { DebugEnterDecision(2, false);
+			int LA2_1 = input.LA(1);
+
+			if ((LA2_1==PRINTER))
+			{
+				alt2 = 1;
+			}
+			} finally { DebugExitDecision(2); }
+			switch (alt2)
+			{
+			case 1:
+				DebugEnterAlt(1);
+				// ADL.g:20:6: printerDecl
+				{
+				DebugLocation(20, 6);
+				PushFollow(Follow._printerDecl_in_program86);
+				printerDecl4=printerDecl();
+				PopFollow();
+
+				DebugLocation(20, 18);
+				 r.printer = printerDecl4; 
+
+				}
+				break;
+
+			}
+			} finally { DebugExitSubRule(2); }
+
+			DebugLocation(21, 5);
+			// ADL.g:21:5: ( node )+
+			int cnt3=0;
+			try { DebugEnterSubRule(3);
 			while (true)
 			{
-				int alt2=2;
-				try { DebugEnterDecision(2, false);
-				int LA2_1 = input.LA(1);
+				int alt3=2;
+				try { DebugEnterDecision(3, false);
+				int LA3_1 = input.LA(1);
 
-				if ((LA2_1==ID))
+				if ((LA3_1==ID))
 				{
-					alt2 = 1;
+					alt3 = 1;
 				}
 
 
-				} finally { DebugExitDecision(2); }
-				switch (alt2)
+				} finally { DebugExitDecision(3); }
+				switch (alt3)
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ADL.g:19:6: node
+					// ADL.g:21:6: node
 					{
-					DebugLocation(19, 6);
-					PushFollow(Follow._node_in_program78);
-					node3=node();
+					DebugLocation(21, 6);
+					PushFollow(Follow._node_in_program97);
+					node5=node();
 					PopFollow();
 
-					DebugLocation(20, 9);
+					DebugLocation(22, 9);
 
-					            r.nodes.Add(node3);
+					            r.nodes.Add(node5);
 					        
 
 					}
 					break;
 
 				default:
-					if (cnt2 >= 1)
-						goto loop2;
+					if (cnt3 >= 1)
+						goto loop3;
 
-					EarlyExitException eee2 = new EarlyExitException( 2, input );
-					DebugRecognitionException(eee2);
-					throw eee2;
+					EarlyExitException eee3 = new EarlyExitException( 3, input );
+					DebugRecognitionException(eee3);
+					throw eee3;
 				}
-				cnt2++;
+				cnt3++;
 			}
-			loop2:
+			loop3:
 				;
 
-			} finally { DebugExitSubRule(2); }
+			} finally { DebugExitSubRule(3); }
 
-			DebugLocation(23, 8);
-			Match(input,EOF,Follow._EOF_in_program97); 
+			DebugLocation(25, 8);
+			Match(input,EOF,Follow._EOF_in_program116); 
 
 			}
 
@@ -208,7 +252,7 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			LeaveRule("program", 1);
 			LeaveRule_program();
 		}
-		DebugLocation(23, 10);
+		DebugLocation(25, 10);
 		} finally { DebugExitRule(GrammarFileName, "program"); }
 		return r;
 
@@ -218,7 +262,7 @@ public partial class ADLParser : Antlr.Runtime.Parser
 	partial void EnterRule_namespaceDecl();
 	partial void LeaveRule_namespaceDecl();
 	// $ANTLR start "namespaceDecl"
-	// ADL.g:25:1: namespaceDecl returns [NamespaceDecl r] : NAMESPACE id1= ID ( DOT id2= ID )* SEMI ;
+	// ADL.g:27:1: namespaceDecl returns [NamespaceDecl r] : NAMESPACE id1= ID ( DOT id2= ID )* SEMI ;
 	[GrammarRule("namespaceDecl")]
 	private NamespaceDecl namespaceDecl()
 	{
@@ -233,63 +277,63 @@ public partial class ADLParser : Antlr.Runtime.Parser
 
 		 r = new NamespaceDecl(); 
 		try { DebugEnterRule(GrammarFileName, "namespaceDecl");
-		DebugLocation(25, 95);
+		DebugLocation(27, 95);
 		try
 		{
-			// ADL.g:27:5: ( NAMESPACE id1= ID ( DOT id2= ID )* SEMI )
+			// ADL.g:29:5: ( NAMESPACE id1= ID ( DOT id2= ID )* SEMI )
 			DebugEnterAlt(1);
-			// ADL.g:27:7: NAMESPACE id1= ID ( DOT id2= ID )* SEMI
+			// ADL.g:29:7: NAMESPACE id1= ID ( DOT id2= ID )* SEMI
 			{
-			DebugLocation(27, 7);
-			Match(input,NAMESPACE,Follow._NAMESPACE_in_namespaceDecl118); 
-			DebugLocation(27, 20);
-			id1=(IToken)Match(input,ID,Follow._ID_in_namespaceDecl122); 
-			DebugLocation(27, 24);
+			DebugLocation(29, 7);
+			Match(input,NAMESPACE,Follow._NAMESPACE_in_namespaceDecl137); 
+			DebugLocation(29, 20);
+			id1=(IToken)Match(input,ID,Follow._ID_in_namespaceDecl141); 
+			DebugLocation(29, 24);
 			 r.ids.Add((id1!=null?id1.Text:default(string))); 
-			DebugLocation(27, 51);
-			// ADL.g:27:51: ( DOT id2= ID )*
-			try { DebugEnterSubRule(3);
+			DebugLocation(29, 51);
+			// ADL.g:29:51: ( DOT id2= ID )*
+			try { DebugEnterSubRule(4);
 			while (true)
 			{
-				int alt3=2;
-				try { DebugEnterDecision(3, false);
-				int LA3_1 = input.LA(1);
+				int alt4=2;
+				try { DebugEnterDecision(4, false);
+				int LA4_1 = input.LA(1);
 
-				if ((LA3_1==DOT))
+				if ((LA4_1==DOT))
 				{
-					alt3 = 1;
+					alt4 = 1;
 				}
 
 
-				} finally { DebugExitDecision(3); }
-				switch ( alt3 )
+				} finally { DebugExitDecision(4); }
+				switch ( alt4 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ADL.g:27:52: DOT id2= ID
+					// ADL.g:29:52: DOT id2= ID
 					{
-					DebugLocation(27, 52);
-					Match(input,DOT,Follow._DOT_in_namespaceDecl127); 
-					DebugLocation(27, 59);
-					id2=(IToken)Match(input,ID,Follow._ID_in_namespaceDecl131); 
-					DebugLocation(27, 63);
+					DebugLocation(29, 52);
+					Match(input,DOT,Follow._DOT_in_namespaceDecl146); 
+					DebugLocation(29, 59);
+					id2=(IToken)Match(input,ID,Follow._ID_in_namespaceDecl150); 
+					DebugLocation(29, 63);
 					 r.ids.Add((id2!=null?id2.Text:default(string))); 
 
 					}
 					break;
 
 				default:
-					goto loop3;
+					goto loop4;
 				}
 			}
 
-			loop3:
+			loop4:
 				;
 
-			} finally { DebugExitSubRule(3); }
+			} finally { DebugExitSubRule(4); }
 
-			DebugLocation(27, 92);
-			Match(input,SEMI,Follow._SEMI_in_namespaceDecl137); 
+			DebugLocation(29, 92);
+			Match(input,SEMI,Follow._SEMI_in_namespaceDecl156); 
 
 			}
 
@@ -305,44 +349,44 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			LeaveRule("namespaceDecl", 2);
 			LeaveRule_namespaceDecl();
 		}
-		DebugLocation(27, 95);
+		DebugLocation(29, 95);
 		} finally { DebugExitRule(GrammarFileName, "namespaceDecl"); }
 		return r;
 
 	}
 	// $ANTLR end "namespaceDecl"
 
-	partial void EnterRule_walkerDecl();
-	partial void LeaveRule_walkerDecl();
-	// $ANTLR start "walkerDecl"
-	// ADL.g:29:1: walkerDecl returns [WalkerDecl r] : WALKER ID SEMI ;
-	[GrammarRule("walkerDecl")]
-	private WalkerDecl walkerDecl()
+	partial void EnterRule_baseClassDecl();
+	partial void LeaveRule_baseClassDecl();
+	// $ANTLR start "baseClassDecl"
+	// ADL.g:31:1: baseClassDecl returns [BaseClassDecl r] : BASE_CLASS ID SEMI ;
+	[GrammarRule("baseClassDecl")]
+	private BaseClassDecl baseClassDecl()
 	{
-		EnterRule_walkerDecl();
-		EnterRule("walkerDecl", 3);
-		TraceIn("walkerDecl", 3);
-		WalkerDecl r = default(WalkerDecl);
+		EnterRule_baseClassDecl();
+		EnterRule("baseClassDecl", 3);
+		TraceIn("baseClassDecl", 3);
+		BaseClassDecl r = default(BaseClassDecl);
 
 
-		IToken ID4 = default(IToken);
+		IToken ID6 = default(IToken);
 
-		try { DebugEnterRule(GrammarFileName, "walkerDecl");
-		DebugLocation(29, 4);
+		try { DebugEnterRule(GrammarFileName, "baseClassDecl");
+		DebugLocation(31, 4);
 		try
 		{
-			// ADL.g:30:5: ( WALKER ID SEMI )
+			// ADL.g:32:5: ( BASE_CLASS ID SEMI )
 			DebugEnterAlt(1);
-			// ADL.g:30:7: WALKER ID SEMI
+			// ADL.g:32:7: BASE_CLASS ID SEMI
 			{
-			DebugLocation(30, 7);
-			Match(input,WALKER,Follow._WALKER_in_walkerDecl153); 
-			DebugLocation(30, 14);
-			ID4=(IToken)Match(input,ID,Follow._ID_in_walkerDecl155); 
-			DebugLocation(30, 17);
-			Match(input,SEMI,Follow._SEMI_in_walkerDecl157); 
-			DebugLocation(31, 5);
-			 r = new WalkerDecl { name = (ID4!=null?ID4.Text:default(string)) }; 
+			DebugLocation(32, 7);
+			Match(input,BASE_CLASS,Follow._BASE_CLASS_in_baseClassDecl172); 
+			DebugLocation(32, 18);
+			ID6=(IToken)Match(input,ID,Follow._ID_in_baseClassDecl174); 
+			DebugLocation(32, 21);
+			Match(input,SEMI,Follow._SEMI_in_baseClassDecl176); 
+			DebugLocation(33, 5);
+			 r = new BaseClassDecl { name = (ID6!=null?ID6.Text:default(string)) }; 
 
 			}
 
@@ -354,121 +398,230 @@ public partial class ADLParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("walkerDecl", 3);
-			LeaveRule("walkerDecl", 3);
+			TraceOut("baseClassDecl", 3);
+			LeaveRule("baseClassDecl", 3);
+			LeaveRule_baseClassDecl();
+		}
+		DebugLocation(34, 4);
+		} finally { DebugExitRule(GrammarFileName, "baseClassDecl"); }
+		return r;
+
+	}
+	// $ANTLR end "baseClassDecl"
+
+	partial void EnterRule_walkerDecl();
+	partial void LeaveRule_walkerDecl();
+	// $ANTLR start "walkerDecl"
+	// ADL.g:36:1: walkerDecl returns [WalkerDecl r] : WALKER ID SEMI ;
+	[GrammarRule("walkerDecl")]
+	private WalkerDecl walkerDecl()
+	{
+		EnterRule_walkerDecl();
+		EnterRule("walkerDecl", 4);
+		TraceIn("walkerDecl", 4);
+		WalkerDecl r = default(WalkerDecl);
+
+
+		IToken ID7 = default(IToken);
+
+		try { DebugEnterRule(GrammarFileName, "walkerDecl");
+		DebugLocation(36, 4);
+		try
+		{
+			// ADL.g:37:5: ( WALKER ID SEMI )
+			DebugEnterAlt(1);
+			// ADL.g:37:7: WALKER ID SEMI
+			{
+			DebugLocation(37, 7);
+			Match(input,WALKER,Follow._WALKER_in_walkerDecl203); 
+			DebugLocation(37, 14);
+			ID7=(IToken)Match(input,ID,Follow._ID_in_walkerDecl205); 
+			DebugLocation(37, 17);
+			Match(input,SEMI,Follow._SEMI_in_walkerDecl207); 
+			DebugLocation(38, 5);
+			 r = new WalkerDecl { name = (ID7!=null?ID7.Text:default(string)) }; 
+
+			}
+
+		}
+		catch (RecognitionException re)
+		{
+			ReportError(re);
+			Recover(input,re);
+		}
+		finally
+		{
+			TraceOut("walkerDecl", 4);
+			LeaveRule("walkerDecl", 4);
 			LeaveRule_walkerDecl();
 		}
-		DebugLocation(32, 4);
+		DebugLocation(39, 4);
 		} finally { DebugExitRule(GrammarFileName, "walkerDecl"); }
 		return r;
 
 	}
 	// $ANTLR end "walkerDecl"
 
+	partial void EnterRule_printerDecl();
+	partial void LeaveRule_printerDecl();
+	// $ANTLR start "printerDecl"
+	// ADL.g:41:1: printerDecl returns [PrinterDecl r] : PRINTER name= ID root= ID SEMI ;
+	[GrammarRule("printerDecl")]
+	private PrinterDecl printerDecl()
+	{
+		EnterRule_printerDecl();
+		EnterRule("printerDecl", 5);
+		TraceIn("printerDecl", 5);
+		PrinterDecl r = default(PrinterDecl);
+
+
+		IToken name = default(IToken);
+		IToken root = default(IToken);
+
+		try { DebugEnterRule(GrammarFileName, "printerDecl");
+		DebugLocation(41, 4);
+		try
+		{
+			// ADL.g:42:5: ( PRINTER name= ID root= ID SEMI )
+			DebugEnterAlt(1);
+			// ADL.g:42:7: PRINTER name= ID root= ID SEMI
+			{
+			DebugLocation(42, 7);
+			Match(input,PRINTER,Follow._PRINTER_in_printerDecl234); 
+			DebugLocation(42, 19);
+			name=(IToken)Match(input,ID,Follow._ID_in_printerDecl238); 
+			DebugLocation(42, 27);
+			root=(IToken)Match(input,ID,Follow._ID_in_printerDecl242); 
+			DebugLocation(42, 31);
+			Match(input,SEMI,Follow._SEMI_in_printerDecl244); 
+			DebugLocation(43, 5);
+			 r = new PrinterDecl { name = (name!=null?name.Text:default(string)), root = (root!=null?root.Text:default(string)) }; 
+
+			}
+
+		}
+		catch (RecognitionException re)
+		{
+			ReportError(re);
+			Recover(input,re);
+		}
+		finally
+		{
+			TraceOut("printerDecl", 5);
+			LeaveRule("printerDecl", 5);
+			LeaveRule_printerDecl();
+		}
+		DebugLocation(44, 4);
+		} finally { DebugExitRule(GrammarFileName, "printerDecl"); }
+		return r;
+
+	}
+	// $ANTLR end "printerDecl"
+
 	partial void EnterRule_node();
 	partial void LeaveRule_node();
 	// $ANTLR start "node"
-	// ADL.g:34:1: node returns [NodeDecl r] : ( nodeVariants | nodeConcrete );
+	// ADL.g:46:1: node returns [NodeDecl r] : ( nodeVariants | nodeConcrete );
 	[GrammarRule("node")]
 	private NodeDecl node()
 	{
 		EnterRule_node();
-		EnterRule("node", 4);
-		TraceIn("node", 4);
+		EnterRule("node", 6);
+		TraceIn("node", 6);
 		NodeDecl r = default(NodeDecl);
 
 
-		NodeVariantsDecl nodeVariants5 = default(NodeVariantsDecl);
-		NodeConcreteDecl nodeConcrete6 = default(NodeConcreteDecl);
+		NodeVariantsDecl nodeVariants8 = default(NodeVariantsDecl);
+		NodeConcreteDecl nodeConcrete9 = default(NodeConcreteDecl);
 
 		try { DebugEnterRule(GrammarFileName, "node");
-		DebugLocation(34, 85);
+		DebugLocation(46, 85);
 		try
 		{
-			// ADL.g:35:5: ( nodeVariants | nodeConcrete )
-			int alt4=2;
-			try { DebugEnterDecision(4, false);
-			int LA4_1 = input.LA(1);
+			// ADL.g:47:5: ( nodeVariants | nodeConcrete )
+			int alt5=2;
+			try { DebugEnterDecision(5, false);
+			int LA5_1 = input.LA(1);
 
-			if ((LA4_1==ID))
+			if ((LA5_1==ID))
 			{
-				int LA4_2 = input.LA(2);
+				int LA5_2 = input.LA(2);
 
-				if ((LA4_2==EQ))
+				if ((LA5_2==EQ))
 				{
-					int LA4_3 = input.LA(3);
+					int LA5_3 = input.LA(3);
 
-					if ((LA4_3==ID))
+					if ((LA5_3==ID))
 					{
-						int LA4_4 = input.LA(4);
+						int LA5_4 = input.LA(4);
 
-						if ((LA4_4==OPEN))
+						if ((LA5_4==OPEN))
 						{
-							alt4 = 1;
+							alt5 = 1;
 						}
-						else if (((LA4_4>=ASTERISK && LA4_4<=ATTRIBUTES)||LA4_4==COMMA||LA4_4==ID||LA4_4==QUESTION||LA4_4==SEMI))
+						else if (((LA5_4>=ASTERISK && LA5_4<=ATTRIBUTES)||LA5_4==COMMA||LA5_4==ID||LA5_4==QUESTION||LA5_4==SEMI))
 						{
-							alt4 = 2;
+							alt5 = 2;
 						}
 						else
 						{
-							NoViableAltException nvae = new NoViableAltException("", 4, 3, input, 4);
+							NoViableAltException nvae = new NoViableAltException("", 5, 3, input, 4);
 							DebugRecognitionException(nvae);
 							throw nvae;
 						}
 					}
-					else if ((LA4_3==ATTRIBUTES||LA4_3==SEMI))
+					else if ((LA5_3==ATTRIBUTES||LA5_3==SEMI))
 					{
-						alt4 = 2;
+						alt5 = 2;
 					}
 					else
 					{
-						NoViableAltException nvae = new NoViableAltException("", 4, 2, input, 3);
+						NoViableAltException nvae = new NoViableAltException("", 5, 2, input, 3);
 						DebugRecognitionException(nvae);
 						throw nvae;
 					}
 				}
 				else
 				{
-					NoViableAltException nvae = new NoViableAltException("", 4, 1, input, 2);
+					NoViableAltException nvae = new NoViableAltException("", 5, 1, input, 2);
 					DebugRecognitionException(nvae);
 					throw nvae;
 				}
 			}
 			else
 			{
-				NoViableAltException nvae = new NoViableAltException("", 4, 0, input, 1);
+				NoViableAltException nvae = new NoViableAltException("", 5, 0, input, 1);
 				DebugRecognitionException(nvae);
 				throw nvae;
 			}
-			} finally { DebugExitDecision(4); }
-			switch (alt4)
+			} finally { DebugExitDecision(5); }
+			switch (alt5)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ADL.g:35:7: nodeVariants
+				// ADL.g:47:7: nodeVariants
 				{
-				DebugLocation(35, 7);
-				PushFollow(Follow._nodeVariants_in_node184);
-				nodeVariants5=nodeVariants();
+				DebugLocation(47, 7);
+				PushFollow(Follow._nodeVariants_in_node271);
+				nodeVariants8=nodeVariants();
 				PopFollow();
 
-				DebugLocation(35, 20);
-				 r = nodeVariants5; 
+				DebugLocation(47, 20);
+				 r = nodeVariants8; 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ADL.g:35:48: nodeConcrete
+				// ADL.g:47:48: nodeConcrete
 				{
-				DebugLocation(35, 48);
-				PushFollow(Follow._nodeConcrete_in_node190);
-				nodeConcrete6=nodeConcrete();
+				DebugLocation(47, 48);
+				PushFollow(Follow._nodeConcrete_in_node277);
+				nodeConcrete9=nodeConcrete();
 				PopFollow();
 
-				DebugLocation(35, 61);
-				 r = nodeConcrete6; 
+				DebugLocation(47, 61);
+				 r = nodeConcrete9; 
 
 				}
 				break;
@@ -482,11 +635,11 @@ public partial class ADLParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("node", 4);
-			LeaveRule("node", 4);
+			TraceOut("node", 6);
+			LeaveRule("node", 6);
 			LeaveRule_node();
 		}
-		DebugLocation(35, 85);
+		DebugLocation(47, 85);
 		} finally { DebugExitRule(GrammarFileName, "node"); }
 		return r;
 
@@ -496,182 +649,95 @@ public partial class ADLParser : Antlr.Runtime.Parser
 	partial void EnterRule_nodeVariants();
 	partial void LeaveRule_nodeVariants();
 	// $ANTLR start "nodeVariants"
-	// ADL.g:37:1: nodeVariants returns [NodeVariantsDecl r] : ID EQ v1= nodeVariant ( PIPE v2= nodeVariant )* ( common_attributes )? SEMI ;
+	// ADL.g:49:1: nodeVariants returns [NodeVariantsDecl r] : ID EQ v1= nodeVariant ( PIPE v2= nodeVariant )* ( common_attributes )? SEMI ;
 	[GrammarRule("nodeVariants")]
 	private NodeVariantsDecl nodeVariants()
 	{
 		EnterRule_nodeVariants();
-		EnterRule("nodeVariants", 5);
-		TraceIn("nodeVariants", 5);
+		EnterRule("nodeVariants", 7);
+		TraceIn("nodeVariants", 7);
 		NodeVariantsDecl r = default(NodeVariantsDecl);
 
 
-		IToken ID7 = default(IToken);
+		IToken ID10 = default(IToken);
 		NodeVariantDecl v1 = default(NodeVariantDecl);
 		NodeVariantDecl v2 = default(NodeVariantDecl);
-		List<AttributeDecl> common_attributes8 = default(List<AttributeDecl>);
+		List<AttributeDecl> common_attributes11 = default(List<AttributeDecl>);
 
 		try { DebugEnterRule(GrammarFileName, "nodeVariants");
-		DebugLocation(37, 8);
+		DebugLocation(49, 8);
 		try
 		{
-			// ADL.g:38:5: ( ID EQ v1= nodeVariant ( PIPE v2= nodeVariant )* ( common_attributes )? SEMI )
+			// ADL.g:50:5: ( ID EQ v1= nodeVariant ( PIPE v2= nodeVariant )* ( common_attributes )? SEMI )
 			DebugEnterAlt(1);
-			// ADL.g:38:7: ID EQ v1= nodeVariant ( PIPE v2= nodeVariant )* ( common_attributes )? SEMI
+			// ADL.g:50:7: ID EQ v1= nodeVariant ( PIPE v2= nodeVariant )* ( common_attributes )? SEMI
 			{
-			DebugLocation(38, 7);
-			ID7=(IToken)Match(input,ID,Follow._ID_in_nodeVariants212); 
-			DebugLocation(38, 10);
-			Match(input,EQ,Follow._EQ_in_nodeVariants214); 
-			DebugLocation(38, 13);
-			 r = new NodeVariantsDecl { id = (ID7!=null?ID7.Text:default(string)) }; 
-			DebugLocation(39, 7);
-			PushFollow(Follow._nodeVariant_in_nodeVariants224);
+			DebugLocation(50, 7);
+			ID10=(IToken)Match(input,ID,Follow._ID_in_nodeVariants299); 
+			DebugLocation(50, 10);
+			Match(input,EQ,Follow._EQ_in_nodeVariants301); 
+			DebugLocation(50, 13);
+			 r = new NodeVariantsDecl { id = (ID10!=null?ID10.Text:default(string)) }; 
+			DebugLocation(51, 7);
+			PushFollow(Follow._nodeVariant_in_nodeVariants311);
 			v1=nodeVariant();
 			PopFollow();
 
-			DebugLocation(39, 20);
+			DebugLocation(51, 20);
 			 r.variants.Add(v1); 
-			DebugLocation(39, 48);
-			// ADL.g:39:48: ( PIPE v2= nodeVariant )*
-			try { DebugEnterSubRule(5);
+			DebugLocation(51, 48);
+			// ADL.g:51:48: ( PIPE v2= nodeVariant )*
+			try { DebugEnterSubRule(6);
 			while (true)
 			{
-				int alt5=2;
-				try { DebugEnterDecision(5, false);
-				int LA5_1 = input.LA(1);
+				int alt6=2;
+				try { DebugEnterDecision(6, false);
+				int LA6_1 = input.LA(1);
 
-				if ((LA5_1==PIPE))
+				if ((LA6_1==PIPE))
 				{
-					alt5 = 1;
+					alt6 = 1;
 				}
 
 
-				} finally { DebugExitDecision(5); }
-				switch ( alt5 )
+				} finally { DebugExitDecision(6); }
+				switch ( alt6 )
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ADL.g:39:49: PIPE v2= nodeVariant
+					// ADL.g:51:49: PIPE v2= nodeVariant
 					{
-					DebugLocation(39, 49);
-					Match(input,PIPE,Follow._PIPE_in_nodeVariants229); 
-					DebugLocation(39, 56);
-					PushFollow(Follow._nodeVariant_in_nodeVariants233);
+					DebugLocation(51, 49);
+					Match(input,PIPE,Follow._PIPE_in_nodeVariants316); 
+					DebugLocation(51, 56);
+					PushFollow(Follow._nodeVariant_in_nodeVariants320);
 					v2=nodeVariant();
 					PopFollow();
 
-					DebugLocation(39, 69);
+					DebugLocation(51, 69);
 					 r.variants.Add(v2); 
 
 					}
 					break;
 
 				default:
-					goto loop5;
+					goto loop6;
 				}
 			}
 
-			loop5:
+			loop6:
 				;
 
-			} finally { DebugExitSubRule(5); }
-
-			DebugLocation(40, 5);
-			// ADL.g:40:5: ( common_attributes )?
-			int alt6=2;
-			try { DebugEnterSubRule(6);
-			try { DebugEnterDecision(6, false);
-			int LA6_1 = input.LA(1);
-
-			if ((LA6_1==COMMON_ATTRIBUTES))
-			{
-				alt6 = 1;
-			}
-			} finally { DebugExitDecision(6); }
-			switch (alt6)
-			{
-			case 1:
-				DebugEnterAlt(1);
-				// ADL.g:40:5: common_attributes
-				{
-				DebugLocation(40, 5);
-				PushFollow(Follow._common_attributes_in_nodeVariants243);
-				common_attributes8=common_attributes();
-				PopFollow();
-
-
-				}
-				break;
-
-			}
 			} finally { DebugExitSubRule(6); }
 
-			DebugLocation(41, 5);
-
-			        r.attributes = common_attributes8 ?? new List<AttributeDecl>();
-			    
-			DebugLocation(44, 5);
-			Match(input,SEMI,Follow._SEMI_in_nodeVariants256); 
-
-			}
-
-		}
-		catch (RecognitionException re)
-		{
-			ReportError(re);
-			Recover(input,re);
-		}
-		finally
-		{
-			TraceOut("nodeVariants", 5);
-			LeaveRule("nodeVariants", 5);
-			LeaveRule_nodeVariants();
-		}
-		DebugLocation(44, 8);
-		} finally { DebugExitRule(GrammarFileName, "nodeVariants"); }
-		return r;
-
-	}
-	// $ANTLR end "nodeVariants"
-
-	partial void EnterRule_nodeVariant();
-	partial void LeaveRule_nodeVariant();
-	// $ANTLR start "nodeVariant"
-	// ADL.g:46:1: nodeVariant returns [NodeVariantDecl r] : ID OPEN ( fields )? CLOSE ( attributes )? ;
-	[GrammarRule("nodeVariant")]
-	private NodeVariantDecl nodeVariant()
-	{
-		EnterRule_nodeVariant();
-		EnterRule("nodeVariant", 6);
-		TraceIn("nodeVariant", 6);
-		NodeVariantDecl r = default(NodeVariantDecl);
-
-
-		IToken ID9 = default(IToken);
-		List<FieldDecl> fields10 = default(List<FieldDecl>);
-		List<AttributeDecl> attributes11 = default(List<AttributeDecl>);
-
-		try { DebugEnterRule(GrammarFileName, "nodeVariant");
-		DebugLocation(46, 4);
-		try
-		{
-			// ADL.g:47:5: ( ID OPEN ( fields )? CLOSE ( attributes )? )
-			DebugEnterAlt(1);
-			// ADL.g:47:7: ID OPEN ( fields )? CLOSE ( attributes )?
-			{
-			DebugLocation(47, 7);
-			ID9=(IToken)Match(input,ID,Follow._ID_in_nodeVariant272); 
-			DebugLocation(47, 10);
-			Match(input,OPEN,Follow._OPEN_in_nodeVariant274); 
-			DebugLocation(47, 15);
-			// ADL.g:47:15: ( fields )?
+			DebugLocation(52, 5);
+			// ADL.g:52:5: ( common_attributes )?
 			int alt7=2;
 			try { DebugEnterSubRule(7);
 			try { DebugEnterDecision(7, false);
 			int LA7_1 = input.LA(1);
 
-			if ((LA7_1==ID))
+			if ((LA7_1==COMMON_ATTRIBUTES))
 			{
 				alt7 = 1;
 			}
@@ -680,11 +746,11 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ADL.g:47:15: fields
+				// ADL.g:52:5: common_attributes
 				{
-				DebugLocation(47, 15);
-				PushFollow(Follow._fields_in_nodeVariant276);
-				fields10=fields();
+				DebugLocation(52, 5);
+				PushFollow(Follow._common_attributes_in_nodeVariants330);
+				common_attributes11=common_attributes();
 				PopFollow();
 
 
@@ -694,16 +760,71 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(7); }
 
-			DebugLocation(47, 23);
-			Match(input,CLOSE,Follow._CLOSE_in_nodeVariant279); 
-			DebugLocation(47, 29);
-			// ADL.g:47:29: ( attributes )?
+			DebugLocation(53, 5);
+
+			        r.attributes = common_attributes11 ?? new List<AttributeDecl>();
+			    
+			DebugLocation(56, 5);
+			Match(input,SEMI,Follow._SEMI_in_nodeVariants343); 
+
+			}
+
+		}
+		catch (RecognitionException re)
+		{
+			ReportError(re);
+			Recover(input,re);
+		}
+		finally
+		{
+			TraceOut("nodeVariants", 7);
+			LeaveRule("nodeVariants", 7);
+			LeaveRule_nodeVariants();
+		}
+		DebugLocation(56, 8);
+		} finally { DebugExitRule(GrammarFileName, "nodeVariants"); }
+		return r;
+
+	}
+	// $ANTLR end "nodeVariants"
+
+	partial void EnterRule_nodeVariant();
+	partial void LeaveRule_nodeVariant();
+	// $ANTLR start "nodeVariant"
+	// ADL.g:58:1: nodeVariant returns [NodeVariantDecl r] : ID OPEN ( fields )? CLOSE ( attributes )? ;
+	[GrammarRule("nodeVariant")]
+	private NodeVariantDecl nodeVariant()
+	{
+		EnterRule_nodeVariant();
+		EnterRule("nodeVariant", 8);
+		TraceIn("nodeVariant", 8);
+		NodeVariantDecl r = default(NodeVariantDecl);
+
+
+		IToken ID12 = default(IToken);
+		List<FieldDecl> fields13 = default(List<FieldDecl>);
+		List<AttributeDecl> attributes14 = default(List<AttributeDecl>);
+
+		try { DebugEnterRule(GrammarFileName, "nodeVariant");
+		DebugLocation(58, 4);
+		try
+		{
+			// ADL.g:59:5: ( ID OPEN ( fields )? CLOSE ( attributes )? )
+			DebugEnterAlt(1);
+			// ADL.g:59:7: ID OPEN ( fields )? CLOSE ( attributes )?
+			{
+			DebugLocation(59, 7);
+			ID12=(IToken)Match(input,ID,Follow._ID_in_nodeVariant359); 
+			DebugLocation(59, 10);
+			Match(input,OPEN,Follow._OPEN_in_nodeVariant361); 
+			DebugLocation(59, 15);
+			// ADL.g:59:15: ( fields )?
 			int alt8=2;
 			try { DebugEnterSubRule(8);
 			try { DebugEnterDecision(8, false);
 			int LA8_1 = input.LA(1);
 
-			if ((LA8_1==ATTRIBUTES))
+			if ((LA8_1==ID))
 			{
 				alt8 = 1;
 			}
@@ -712,11 +833,11 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ADL.g:47:29: attributes
+				// ADL.g:59:15: fields
 				{
-				DebugLocation(47, 29);
-				PushFollow(Follow._attributes_in_nodeVariant281);
-				attributes11=attributes();
+				DebugLocation(59, 15);
+				PushFollow(Follow._fields_in_nodeVariant363);
+				fields13=fields();
 				PopFollow();
 
 
@@ -726,72 +847,16 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(8); }
 
-			DebugLocation(48, 4);
-			 r = new NodeVariantDecl 
-			       { id = (ID9!=null?ID9.Text:default(string)),
-			        fields = fields10 ?? new List<FieldDecl>(),
-			        attributes = attributes11 ?? new List<AttributeDecl>()
-			       };
-			   
-
-			}
-
-		}
-		catch (RecognitionException re)
-		{
-			ReportError(re);
-			Recover(input,re);
-		}
-		finally
-		{
-			TraceOut("nodeVariant", 6);
-			LeaveRule("nodeVariant", 6);
-			LeaveRule_nodeVariant();
-		}
-		DebugLocation(53, 4);
-		} finally { DebugExitRule(GrammarFileName, "nodeVariant"); }
-		return r;
-
-	}
-	// $ANTLR end "nodeVariant"
-
-	partial void EnterRule_nodeConcrete();
-	partial void LeaveRule_nodeConcrete();
-	// $ANTLR start "nodeConcrete"
-	// ADL.g:55:1: nodeConcrete returns [NodeConcreteDecl r] : ID EQ ( fields )? ( attributes )? SEMI ;
-	[GrammarRule("nodeConcrete")]
-	private NodeConcreteDecl nodeConcrete()
-	{
-		EnterRule_nodeConcrete();
-		EnterRule("nodeConcrete", 7);
-		TraceIn("nodeConcrete", 7);
-		NodeConcreteDecl r = default(NodeConcreteDecl);
-
-
-		IToken ID12 = default(IToken);
-		List<FieldDecl> fields13 = default(List<FieldDecl>);
-		List<AttributeDecl> attributes14 = default(List<AttributeDecl>);
-
-		try { DebugEnterRule(GrammarFileName, "nodeConcrete");
-		DebugLocation(55, 9);
-		try
-		{
-			// ADL.g:56:5: ( ID EQ ( fields )? ( attributes )? SEMI )
-			DebugEnterAlt(1);
-			// ADL.g:56:7: ID EQ ( fields )? ( attributes )? SEMI
-			{
-			DebugLocation(56, 7);
-			ID12=(IToken)Match(input,ID,Follow._ID_in_nodeConcrete303); 
-			DebugLocation(56, 10);
-			Match(input,EQ,Follow._EQ_in_nodeConcrete305); 
-			DebugLocation(56, 13);
-			// ADL.g:56:13: ( fields )?
+			DebugLocation(59, 23);
+			Match(input,CLOSE,Follow._CLOSE_in_nodeVariant366); 
+			DebugLocation(59, 29);
+			// ADL.g:59:29: ( attributes )?
 			int alt9=2;
 			try { DebugEnterSubRule(9);
 			try { DebugEnterDecision(9, false);
 			int LA9_1 = input.LA(1);
 
-			if ((LA9_1==ID))
+			if ((LA9_1==ATTRIBUTES))
 			{
 				alt9 = 1;
 			}
@@ -800,11 +865,11 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ADL.g:56:13: fields
+				// ADL.g:59:29: attributes
 				{
-				DebugLocation(56, 13);
-				PushFollow(Follow._fields_in_nodeConcrete307);
-				fields13=fields();
+				DebugLocation(59, 29);
+				PushFollow(Follow._attributes_in_nodeVariant368);
+				attributes14=attributes();
 				PopFollow();
 
 
@@ -814,14 +879,72 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(9); }
 
-			DebugLocation(56, 21);
-			// ADL.g:56:21: ( attributes )?
+			DebugLocation(60, 4);
+			 r = new NodeVariantDecl 
+			       { id = (ID12!=null?ID12.Text:default(string)),
+			        fields = fields13 ?? new List<FieldDecl>(),
+			        attributes = attributes14 ?? new List<AttributeDecl>()
+			       };
+			   
+
+			}
+
+		}
+		catch (RecognitionException re)
+		{
+			ReportError(re);
+			Recover(input,re);
+		}
+		finally
+		{
+			TraceOut("nodeVariant", 8);
+			LeaveRule("nodeVariant", 8);
+			LeaveRule_nodeVariant();
+		}
+		DebugLocation(65, 4);
+		} finally { DebugExitRule(GrammarFileName, "nodeVariant"); }
+		return r;
+
+	}
+	// $ANTLR end "nodeVariant"
+
+	partial void EnterRule_nodeConcrete();
+	partial void LeaveRule_nodeConcrete();
+	// $ANTLR start "nodeConcrete"
+	// ADL.g:67:1: nodeConcrete returns [NodeConcreteDecl r] : ID EQ ( fields )? ( attributes )? SEMI ;
+	[GrammarRule("nodeConcrete")]
+	private NodeConcreteDecl nodeConcrete()
+	{
+		EnterRule_nodeConcrete();
+		EnterRule("nodeConcrete", 9);
+		TraceIn("nodeConcrete", 9);
+		NodeConcreteDecl r = default(NodeConcreteDecl);
+
+
+		IToken ID15 = default(IToken);
+		List<FieldDecl> fields16 = default(List<FieldDecl>);
+		List<AttributeDecl> attributes17 = default(List<AttributeDecl>);
+
+		try { DebugEnterRule(GrammarFileName, "nodeConcrete");
+		DebugLocation(67, 9);
+		try
+		{
+			// ADL.g:68:5: ( ID EQ ( fields )? ( attributes )? SEMI )
+			DebugEnterAlt(1);
+			// ADL.g:68:7: ID EQ ( fields )? ( attributes )? SEMI
+			{
+			DebugLocation(68, 7);
+			ID15=(IToken)Match(input,ID,Follow._ID_in_nodeConcrete390); 
+			DebugLocation(68, 10);
+			Match(input,EQ,Follow._EQ_in_nodeConcrete392); 
+			DebugLocation(68, 13);
+			// ADL.g:68:13: ( fields )?
 			int alt10=2;
 			try { DebugEnterSubRule(10);
 			try { DebugEnterDecision(10, false);
 			int LA10_1 = input.LA(1);
 
-			if ((LA10_1==ATTRIBUTES))
+			if ((LA10_1==ID))
 			{
 				alt10 = 1;
 			}
@@ -830,11 +953,11 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ADL.g:56:21: attributes
+				// ADL.g:68:13: fields
 				{
-				DebugLocation(56, 21);
-				PushFollow(Follow._attributes_in_nodeConcrete310);
-				attributes14=attributes();
+				DebugLocation(68, 13);
+				PushFollow(Follow._fields_in_nodeConcrete394);
+				fields16=fields();
 				PopFollow();
 
 
@@ -844,15 +967,45 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(10); }
 
-			DebugLocation(57, 4);
+			DebugLocation(68, 21);
+			// ADL.g:68:21: ( attributes )?
+			int alt11=2;
+			try { DebugEnterSubRule(11);
+			try { DebugEnterDecision(11, false);
+			int LA11_1 = input.LA(1);
+
+			if ((LA11_1==ATTRIBUTES))
+			{
+				alt11 = 1;
+			}
+			} finally { DebugExitDecision(11); }
+			switch (alt11)
+			{
+			case 1:
+				DebugEnterAlt(1);
+				// ADL.g:68:21: attributes
+				{
+				DebugLocation(68, 21);
+				PushFollow(Follow._attributes_in_nodeConcrete397);
+				attributes17=attributes();
+				PopFollow();
+
+
+				}
+				break;
+
+			}
+			} finally { DebugExitSubRule(11); }
+
+			DebugLocation(69, 4);
 			 r = new NodeConcreteDecl 
-			       { id = (ID12!=null?ID12.Text:default(string)),
-			        fields = fields13 ?? new List<FieldDecl>(),
-			        attributes = attributes14 ?? new List<AttributeDecl>()
+			       { id = (ID15!=null?ID15.Text:default(string)),
+			        fields = fields16 ?? new List<FieldDecl>(),
+			        attributes = attributes17 ?? new List<AttributeDecl>()
 			       };
 			   
-			DebugLocation(62, 6);
-			Match(input,SEMI,Follow._SEMI_in_nodeConcrete318); 
+			DebugLocation(74, 6);
+			Match(input,SEMI,Follow._SEMI_in_nodeConcrete405); 
 
 			}
 
@@ -864,11 +1017,11 @@ public partial class ADLParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("nodeConcrete", 7);
-			LeaveRule("nodeConcrete", 7);
+			TraceOut("nodeConcrete", 9);
+			LeaveRule("nodeConcrete", 9);
 			LeaveRule_nodeConcrete();
 		}
-		DebugLocation(62, 9);
+		DebugLocation(74, 9);
 		} finally { DebugExitRule(GrammarFileName, "nodeConcrete"); }
 		return r;
 
@@ -878,13 +1031,13 @@ public partial class ADLParser : Antlr.Runtime.Parser
 	partial void EnterRule_fields();
 	partial void LeaveRule_fields();
 	// $ANTLR start "fields"
-	// ADL.g:64:1: fields returns [List<FieldDecl> r] : f1= field ( COMMA f2= field )* ;
+	// ADL.g:76:1: fields returns [List<FieldDecl> r] : f1= field ( COMMA f2= field )* ;
 	[GrammarRule("fields")]
 	private List<FieldDecl> fields()
 	{
 		EnterRule_fields();
-		EnterRule("fields", 8);
-		TraceIn("fields", 8);
+		EnterRule("fields", 10);
+		TraceIn("fields", 10);
 		List<FieldDecl> r = default(List<FieldDecl>);
 
 
@@ -893,123 +1046,22 @@ public partial class ADLParser : Antlr.Runtime.Parser
 
 		 r = new List<FieldDecl>(); 
 		try { DebugEnterRule(GrammarFileName, "fields");
-		DebugLocation(64, 70);
+		DebugLocation(76, 70);
 		try
 		{
-			// ADL.g:66:5: (f1= field ( COMMA f2= field )* )
+			// ADL.g:78:5: (f1= field ( COMMA f2= field )* )
 			DebugEnterAlt(1);
-			// ADL.g:66:7: f1= field ( COMMA f2= field )*
+			// ADL.g:78:7: f1= field ( COMMA f2= field )*
 			{
-			DebugLocation(66, 9);
-			PushFollow(Follow._field_in_fields345);
+			DebugLocation(78, 9);
+			PushFollow(Follow._field_in_fields432);
 			f1=field();
 			PopFollow();
 
-			DebugLocation(66, 16);
+			DebugLocation(78, 16);
 			 r.Add(f1); 
-			DebugLocation(66, 35);
-			// ADL.g:66:35: ( COMMA f2= field )*
-			try { DebugEnterSubRule(11);
-			while (true)
-			{
-				int alt11=2;
-				try { DebugEnterDecision(11, false);
-				int LA11_1 = input.LA(1);
-
-				if ((LA11_1==COMMA))
-				{
-					alt11 = 1;
-				}
-
-
-				} finally { DebugExitDecision(11); }
-				switch ( alt11 )
-				{
-				case 1:
-					DebugEnterAlt(1);
-					// ADL.g:66:36: COMMA f2= field
-					{
-					DebugLocation(66, 36);
-					Match(input,COMMA,Follow._COMMA_in_fields350); 
-					DebugLocation(66, 44);
-					PushFollow(Follow._field_in_fields354);
-					f2=field();
-					PopFollow();
-
-					DebugLocation(66, 51);
-					 r.Add(f2); 
-
-					}
-					break;
-
-				default:
-					goto loop11;
-				}
-			}
-
-			loop11:
-				;
-
-			} finally { DebugExitSubRule(11); }
-
-
-			}
-
-		}
-		catch (RecognitionException re)
-		{
-			ReportError(re);
-			Recover(input,re);
-		}
-		finally
-		{
-			TraceOut("fields", 8);
-			LeaveRule("fields", 8);
-			LeaveRule_fields();
-		}
-		DebugLocation(66, 70);
-		} finally { DebugExitRule(GrammarFileName, "fields"); }
-		return r;
-
-	}
-	// $ANTLR end "fields"
-
-	partial void EnterRule_attributes();
-	partial void LeaveRule_attributes();
-	// $ANTLR start "attributes"
-	// ADL.g:68:1: attributes returns [List<AttributeDecl> r] : ATTRIBUTES a1= attributeDecl ( COMMA a2= attributeDecl )* ;
-	[GrammarRule("attributes")]
-	private List<AttributeDecl> attributes()
-	{
-		EnterRule_attributes();
-		EnterRule("attributes", 9);
-		TraceIn("attributes", 9);
-		List<AttributeDecl> r = default(List<AttributeDecl>);
-
-
-		AttributeDecl a1 = default(AttributeDecl);
-		AttributeDecl a2 = default(AttributeDecl);
-
-		 r = new List<AttributeDecl>(); 
-		try { DebugEnterRule(GrammarFileName, "attributes");
-		DebugLocation(68, 97);
-		try
-		{
-			// ADL.g:70:5: ( ATTRIBUTES a1= attributeDecl ( COMMA a2= attributeDecl )* )
-			DebugEnterAlt(1);
-			// ADL.g:70:7: ATTRIBUTES a1= attributeDecl ( COMMA a2= attributeDecl )*
-			{
-			DebugLocation(70, 7);
-			Match(input,ATTRIBUTES,Follow._ATTRIBUTES_in_attributes379); 
-			DebugLocation(70, 20);
-			PushFollow(Follow._attributeDecl_in_attributes383);
-			a1=attributeDecl();
-			PopFollow();
-
-			DebugLocation(70, 35);
-			 r.Add(a1); 
-			DebugLocation(70, 54);
-			// ADL.g:70:54: ( COMMA a2= attributeDecl )*
+			DebugLocation(78, 35);
+			// ADL.g:78:35: ( COMMA f2= field )*
 			try { DebugEnterSubRule(12);
 			while (true)
 			{
@@ -1028,17 +1080,17 @@ public partial class ADLParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ADL.g:70:55: COMMA a2= attributeDecl
+					// ADL.g:78:36: COMMA f2= field
 					{
-					DebugLocation(70, 55);
-					Match(input,COMMA,Follow._COMMA_in_attributes388); 
-					DebugLocation(70, 63);
-					PushFollow(Follow._attributeDecl_in_attributes392);
-					a2=attributeDecl();
+					DebugLocation(78, 36);
+					Match(input,COMMA,Follow._COMMA_in_fields437); 
+					DebugLocation(78, 44);
+					PushFollow(Follow._field_in_fields441);
+					f2=field();
 					PopFollow();
 
-					DebugLocation(70, 78);
-					 r.Add(a2); 
+					DebugLocation(78, 51);
+					 r.Add(f2); 
 
 					}
 					break;
@@ -1064,27 +1116,27 @@ public partial class ADLParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("attributes", 9);
-			LeaveRule("attributes", 9);
-			LeaveRule_attributes();
+			TraceOut("fields", 10);
+			LeaveRule("fields", 10);
+			LeaveRule_fields();
 		}
-		DebugLocation(70, 97);
-		} finally { DebugExitRule(GrammarFileName, "attributes"); }
+		DebugLocation(78, 70);
+		} finally { DebugExitRule(GrammarFileName, "fields"); }
 		return r;
 
 	}
-	// $ANTLR end "attributes"
+	// $ANTLR end "fields"
 
-	partial void EnterRule_common_attributes();
-	partial void LeaveRule_common_attributes();
-	// $ANTLR start "common_attributes"
-	// ADL.g:72:1: common_attributes returns [List<AttributeDecl> r] : COMMON_ATTRIBUTES a1= attributeDecl ( COMMA a2= attributeDecl )* ;
-	[GrammarRule("common_attributes")]
-	private List<AttributeDecl> common_attributes()
+	partial void EnterRule_attributes();
+	partial void LeaveRule_attributes();
+	// $ANTLR start "attributes"
+	// ADL.g:80:1: attributes returns [List<AttributeDecl> r] : ATTRIBUTES a1= attributeDecl ( COMMA a2= attributeDecl )* ;
+	[GrammarRule("attributes")]
+	private List<AttributeDecl> attributes()
 	{
-		EnterRule_common_attributes();
-		EnterRule("common_attributes", 10);
-		TraceIn("common_attributes", 10);
+		EnterRule_attributes();
+		EnterRule("attributes", 11);
+		TraceIn("attributes", 11);
 		List<AttributeDecl> r = default(List<AttributeDecl>);
 
 
@@ -1092,25 +1144,25 @@ public partial class ADLParser : Antlr.Runtime.Parser
 		AttributeDecl a2 = default(AttributeDecl);
 
 		 r = new List<AttributeDecl>(); 
-		try { DebugEnterRule(GrammarFileName, "common_attributes");
-		DebugLocation(72, 104);
+		try { DebugEnterRule(GrammarFileName, "attributes");
+		DebugLocation(80, 97);
 		try
 		{
-			// ADL.g:74:5: ( COMMON_ATTRIBUTES a1= attributeDecl ( COMMA a2= attributeDecl )* )
+			// ADL.g:82:5: ( ATTRIBUTES a1= attributeDecl ( COMMA a2= attributeDecl )* )
 			DebugEnterAlt(1);
-			// ADL.g:74:7: COMMON_ATTRIBUTES a1= attributeDecl ( COMMA a2= attributeDecl )*
+			// ADL.g:82:7: ATTRIBUTES a1= attributeDecl ( COMMA a2= attributeDecl )*
 			{
-			DebugLocation(74, 7);
-			Match(input,COMMON_ATTRIBUTES,Follow._COMMON_ATTRIBUTES_in_common_attributes417); 
-			DebugLocation(74, 27);
-			PushFollow(Follow._attributeDecl_in_common_attributes421);
+			DebugLocation(82, 7);
+			Match(input,ATTRIBUTES,Follow._ATTRIBUTES_in_attributes466); 
+			DebugLocation(82, 20);
+			PushFollow(Follow._attributeDecl_in_attributes470);
 			a1=attributeDecl();
 			PopFollow();
 
-			DebugLocation(74, 42);
+			DebugLocation(82, 35);
 			 r.Add(a1); 
-			DebugLocation(74, 61);
-			// ADL.g:74:61: ( COMMA a2= attributeDecl )*
+			DebugLocation(82, 54);
+			// ADL.g:82:54: ( COMMA a2= attributeDecl )*
 			try { DebugEnterSubRule(13);
 			while (true)
 			{
@@ -1129,16 +1181,16 @@ public partial class ADLParser : Antlr.Runtime.Parser
 				{
 				case 1:
 					DebugEnterAlt(1);
-					// ADL.g:74:62: COMMA a2= attributeDecl
+					// ADL.g:82:55: COMMA a2= attributeDecl
 					{
-					DebugLocation(74, 62);
-					Match(input,COMMA,Follow._COMMA_in_common_attributes426); 
-					DebugLocation(74, 70);
-					PushFollow(Follow._attributeDecl_in_common_attributes430);
+					DebugLocation(82, 55);
+					Match(input,COMMA,Follow._COMMA_in_attributes475); 
+					DebugLocation(82, 63);
+					PushFollow(Follow._attributeDecl_in_attributes479);
 					a2=attributeDecl();
 					PopFollow();
 
-					DebugLocation(74, 85);
+					DebugLocation(82, 78);
 					 r.Add(a2); 
 
 					}
@@ -1165,11 +1217,112 @@ public partial class ADLParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("common_attributes", 10);
-			LeaveRule("common_attributes", 10);
+			TraceOut("attributes", 11);
+			LeaveRule("attributes", 11);
+			LeaveRule_attributes();
+		}
+		DebugLocation(82, 97);
+		} finally { DebugExitRule(GrammarFileName, "attributes"); }
+		return r;
+
+	}
+	// $ANTLR end "attributes"
+
+	partial void EnterRule_common_attributes();
+	partial void LeaveRule_common_attributes();
+	// $ANTLR start "common_attributes"
+	// ADL.g:84:1: common_attributes returns [List<AttributeDecl> r] : COMMON_ATTRIBUTES a1= attributeDecl ( COMMA a2= attributeDecl )* ;
+	[GrammarRule("common_attributes")]
+	private List<AttributeDecl> common_attributes()
+	{
+		EnterRule_common_attributes();
+		EnterRule("common_attributes", 12);
+		TraceIn("common_attributes", 12);
+		List<AttributeDecl> r = default(List<AttributeDecl>);
+
+
+		AttributeDecl a1 = default(AttributeDecl);
+		AttributeDecl a2 = default(AttributeDecl);
+
+		 r = new List<AttributeDecl>(); 
+		try { DebugEnterRule(GrammarFileName, "common_attributes");
+		DebugLocation(84, 104);
+		try
+		{
+			// ADL.g:86:5: ( COMMON_ATTRIBUTES a1= attributeDecl ( COMMA a2= attributeDecl )* )
+			DebugEnterAlt(1);
+			// ADL.g:86:7: COMMON_ATTRIBUTES a1= attributeDecl ( COMMA a2= attributeDecl )*
+			{
+			DebugLocation(86, 7);
+			Match(input,COMMON_ATTRIBUTES,Follow._COMMON_ATTRIBUTES_in_common_attributes504); 
+			DebugLocation(86, 27);
+			PushFollow(Follow._attributeDecl_in_common_attributes508);
+			a1=attributeDecl();
+			PopFollow();
+
+			DebugLocation(86, 42);
+			 r.Add(a1); 
+			DebugLocation(86, 61);
+			// ADL.g:86:61: ( COMMA a2= attributeDecl )*
+			try { DebugEnterSubRule(14);
+			while (true)
+			{
+				int alt14=2;
+				try { DebugEnterDecision(14, false);
+				int LA14_1 = input.LA(1);
+
+				if ((LA14_1==COMMA))
+				{
+					alt14 = 1;
+				}
+
+
+				} finally { DebugExitDecision(14); }
+				switch ( alt14 )
+				{
+				case 1:
+					DebugEnterAlt(1);
+					// ADL.g:86:62: COMMA a2= attributeDecl
+					{
+					DebugLocation(86, 62);
+					Match(input,COMMA,Follow._COMMA_in_common_attributes513); 
+					DebugLocation(86, 70);
+					PushFollow(Follow._attributeDecl_in_common_attributes517);
+					a2=attributeDecl();
+					PopFollow();
+
+					DebugLocation(86, 85);
+					 r.Add(a2); 
+
+					}
+					break;
+
+				default:
+					goto loop14;
+				}
+			}
+
+			loop14:
+				;
+
+			} finally { DebugExitSubRule(14); }
+
+
+			}
+
+		}
+		catch (RecognitionException re)
+		{
+			ReportError(re);
+			Recover(input,re);
+		}
+		finally
+		{
+			TraceOut("common_attributes", 12);
+			LeaveRule("common_attributes", 12);
 			LeaveRule_common_attributes();
 		}
-		DebugLocation(74, 104);
+		DebugLocation(86, 104);
 		} finally { DebugExitRule(GrammarFileName, "common_attributes"); }
 		return r;
 
@@ -1179,13 +1332,13 @@ public partial class ADLParser : Antlr.Runtime.Parser
 	partial void EnterRule_field();
 	partial void LeaveRule_field();
 	// $ANTLR start "field"
-	// ADL.g:76:1: field returns [FieldDecl r] : typeId= ID (q= QUESTION |a= ASTERISK )? (nameId= ID )? ;
+	// ADL.g:88:1: field returns [FieldDecl r] : typeId= ID (q= QUESTION |a= ASTERISK )? (nameId= ID )? ;
 	[GrammarRule("field")]
 	private FieldDecl field()
 	{
 		EnterRule_field();
-		EnterRule("field", 11);
-		TraceIn("field", 11);
+		EnterRule("field", 13);
+		TraceIn("field", 13);
 		FieldDecl r = default(FieldDecl);
 
 
@@ -1195,75 +1348,48 @@ public partial class ADLParser : Antlr.Runtime.Parser
 		IToken nameId = default(IToken);
 
 		try { DebugEnterRule(GrammarFileName, "field");
-		DebugLocation(76, 5);
+		DebugLocation(88, 5);
 		try
 		{
-			// ADL.g:77:5: (typeId= ID (q= QUESTION |a= ASTERISK )? (nameId= ID )? )
+			// ADL.g:89:5: (typeId= ID (q= QUESTION |a= ASTERISK )? (nameId= ID )? )
 			DebugEnterAlt(1);
-			// ADL.g:77:7: typeId= ID (q= QUESTION |a= ASTERISK )? (nameId= ID )?
+			// ADL.g:89:7: typeId= ID (q= QUESTION |a= ASTERISK )? (nameId= ID )?
 			{
-			DebugLocation(77, 13);
-			typeId=(IToken)Match(input,ID,Follow._ID_in_field456); 
-			DebugLocation(77, 17);
-			// ADL.g:77:17: (q= QUESTION |a= ASTERISK )?
-			int alt14=3;
-			try { DebugEnterSubRule(14);
-			try { DebugEnterDecision(14, false);
-			int LA14_1 = input.LA(1);
-
-			if ((LA14_1==QUESTION))
-			{
-				alt14 = 1;
-			}
-			else if ((LA14_1==ASTERISK))
-			{
-				alt14 = 2;
-			}
-			} finally { DebugExitDecision(14); }
-			switch (alt14)
-			{
-			case 1:
-				DebugEnterAlt(1);
-				// ADL.g:77:18: q= QUESTION
-				{
-				DebugLocation(77, 19);
-				q=(IToken)Match(input,QUESTION,Follow._QUESTION_in_field461); 
-
-				}
-				break;
-			case 2:
-				DebugEnterAlt(2);
-				// ADL.g:77:29: a= ASTERISK
-				{
-				DebugLocation(77, 30);
-				a=(IToken)Match(input,ASTERISK,Follow._ASTERISK_in_field465); 
-
-				}
-				break;
-
-			}
-			} finally { DebugExitSubRule(14); }
-
-			DebugLocation(77, 48);
-			// ADL.g:77:48: (nameId= ID )?
-			int alt15=2;
+			DebugLocation(89, 13);
+			typeId=(IToken)Match(input,ID,Follow._ID_in_field543); 
+			DebugLocation(89, 17);
+			// ADL.g:89:17: (q= QUESTION |a= ASTERISK )?
+			int alt15=3;
 			try { DebugEnterSubRule(15);
 			try { DebugEnterDecision(15, false);
 			int LA15_1 = input.LA(1);
 
-			if ((LA15_1==ID))
+			if ((LA15_1==QUESTION))
 			{
 				alt15 = 1;
+			}
+			else if ((LA15_1==ASTERISK))
+			{
+				alt15 = 2;
 			}
 			} finally { DebugExitDecision(15); }
 			switch (alt15)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ADL.g:77:48: nameId= ID
+				// ADL.g:89:18: q= QUESTION
 				{
-				DebugLocation(77, 48);
-				nameId=(IToken)Match(input,ID,Follow._ID_in_field471); 
+				DebugLocation(89, 19);
+				q=(IToken)Match(input,QUESTION,Follow._QUESTION_in_field548); 
+
+				}
+				break;
+			case 2:
+				DebugEnterAlt(2);
+				// ADL.g:89:29: a= ASTERISK
+				{
+				DebugLocation(89, 30);
+				a=(IToken)Match(input,ASTERISK,Follow._ASTERISK_in_field552); 
 
 				}
 				break;
@@ -1271,7 +1397,34 @@ public partial class ADLParser : Antlr.Runtime.Parser
 			}
 			} finally { DebugExitSubRule(15); }
 
-			DebugLocation(77, 53);
+			DebugLocation(89, 48);
+			// ADL.g:89:48: (nameId= ID )?
+			int alt16=2;
+			try { DebugEnterSubRule(16);
+			try { DebugEnterDecision(16, false);
+			int LA16_1 = input.LA(1);
+
+			if ((LA16_1==ID))
+			{
+				alt16 = 1;
+			}
+			} finally { DebugExitDecision(16); }
+			switch (alt16)
+			{
+			case 1:
+				DebugEnterAlt(1);
+				// ADL.g:89:48: nameId= ID
+				{
+				DebugLocation(89, 48);
+				nameId=(IToken)Match(input,ID,Follow._ID_in_field558); 
+
+				}
+				break;
+
+			}
+			} finally { DebugExitSubRule(16); }
+
+			DebugLocation(89, 53);
 
 			    r = new FieldDecl {
 			    type = (typeId!=null?typeId.Text:default(string)), id = (nameId!=null?nameId.Text:default(string)) ?? (typeId!=null?typeId.Text:default(string)), optional = q != null, many = a != null    };
@@ -1287,11 +1440,11 @@ public partial class ADLParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("field", 11);
-			LeaveRule("field", 11);
+			TraceOut("field", 13);
+			LeaveRule("field", 13);
 			LeaveRule_field();
 		}
-		DebugLocation(80, 5);
+		DebugLocation(92, 5);
 		} finally { DebugExitRule(GrammarFileName, "field"); }
 		return r;
 
@@ -1301,36 +1454,64 @@ public partial class ADLParser : Antlr.Runtime.Parser
 	partial void EnterRule_attributeDecl();
 	partial void LeaveRule_attributeDecl();
 	// $ANTLR start "attributeDecl"
-	// ADL.g:82:1: attributeDecl returns [AttributeDecl r] : attrType ID ;
+	// ADL.g:94:1: attributeDecl returns [AttributeDecl r] : ( PRINTED )? attrType ID ;
 	[GrammarRule("attributeDecl")]
 	private AttributeDecl attributeDecl()
 	{
 		EnterRule_attributeDecl();
-		EnterRule("attributeDecl", 12);
-		TraceIn("attributeDecl", 12);
+		EnterRule("attributeDecl", 14);
+		TraceIn("attributeDecl", 14);
 		AttributeDecl r = default(AttributeDecl);
 
 
-		IToken ID15 = default(IToken);
-		string attrType16 = default(string);
+		IToken ID18 = default(IToken);
+		IToken PRINTED20 = default(IToken);
+		string attrType19 = default(string);
 
 		try { DebugEnterRule(GrammarFileName, "attributeDecl");
-		DebugLocation(82, 83);
+		DebugLocation(94, 120);
 		try
 		{
-			// ADL.g:83:5: ( attrType ID )
+			// ADL.g:95:5: ( ( PRINTED )? attrType ID )
 			DebugEnterAlt(1);
-			// ADL.g:83:7: attrType ID
+			// ADL.g:95:7: ( PRINTED )? attrType ID
 			{
-			DebugLocation(83, 7);
-			PushFollow(Follow._attrType_in_attributeDecl490);
-			attrType16=attrType();
+			DebugLocation(95, 7);
+			// ADL.g:95:7: ( PRINTED )?
+			int alt17=2;
+			try { DebugEnterSubRule(17);
+			try { DebugEnterDecision(17, false);
+			int LA17_1 = input.LA(1);
+
+			if ((LA17_1==PRINTED))
+			{
+				alt17 = 1;
+			}
+			} finally { DebugExitDecision(17); }
+			switch (alt17)
+			{
+			case 1:
+				DebugEnterAlt(1);
+				// ADL.g:95:7: PRINTED
+				{
+				DebugLocation(95, 7);
+				PRINTED20=(IToken)Match(input,PRINTED,Follow._PRINTED_in_attributeDecl577); 
+
+				}
+				break;
+
+			}
+			} finally { DebugExitSubRule(17); }
+
+			DebugLocation(95, 16);
+			PushFollow(Follow._attrType_in_attributeDecl580);
+			attrType19=attrType();
 			PopFollow();
 
-			DebugLocation(83, 16);
-			ID15=(IToken)Match(input,ID,Follow._ID_in_attributeDecl492); 
-			DebugLocation(83, 19);
-			 r = new AttributeDecl { id = (ID15!=null?ID15.Text:default(string)), type = attrType16 }; 
+			DebugLocation(95, 25);
+			ID18=(IToken)Match(input,ID,Follow._ID_in_attributeDecl582); 
+			DebugLocation(95, 28);
+			 r = new AttributeDecl { id = (ID18!=null?ID18.Text:default(string)), type = attrType19, printed = PRINTED20 != null }; 
 
 			}
 
@@ -1342,11 +1523,11 @@ public partial class ADLParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("attributeDecl", 12);
-			LeaveRule("attributeDecl", 12);
+			TraceOut("attributeDecl", 14);
+			LeaveRule("attributeDecl", 14);
 			LeaveRule_attributeDecl();
 		}
-		DebugLocation(83, 83);
+		DebugLocation(95, 120);
 		} finally { DebugExitRule(GrammarFileName, "attributeDecl"); }
 		return r;
 
@@ -1356,107 +1537,107 @@ public partial class ADLParser : Antlr.Runtime.Parser
 	partial void EnterRule_attrType();
 	partial void LeaveRule_attrType();
 	// $ANTLR start "attrType"
-	// ADL.g:85:1: attrType returns [string r] : (id1= ID ( DOT id2= ID )* | QUOTED_TEXT );
+	// ADL.g:97:1: attrType returns [string r] : (id1= ID ( DOT id2= ID )* | QUOTED_TEXT );
 	[GrammarRule("attrType")]
 	private string attrType()
 	{
 		EnterRule_attrType();
-		EnterRule("attrType", 13);
-		TraceIn("attrType", 13);
+		EnterRule("attrType", 15);
+		TraceIn("attrType", 15);
 		string r = default(string);
 
 
 		IToken id1 = default(IToken);
 		IToken id2 = default(IToken);
-		IToken QUOTED_TEXT17 = default(IToken);
+		IToken QUOTED_TEXT21 = default(IToken);
 
 		try { DebugEnterRule(GrammarFileName, "attrType");
-		DebugLocation(85, 88);
+		DebugLocation(97, 88);
 		try
 		{
-			// ADL.g:86:5: (id1= ID ( DOT id2= ID )* | QUOTED_TEXT )
-			int alt17=2;
-			try { DebugEnterDecision(17, false);
-			int LA17_1 = input.LA(1);
+			// ADL.g:98:5: (id1= ID ( DOT id2= ID )* | QUOTED_TEXT )
+			int alt19=2;
+			try { DebugEnterDecision(19, false);
+			int LA19_1 = input.LA(1);
 
-			if ((LA17_1==ID))
+			if ((LA19_1==ID))
 			{
-				alt17 = 1;
+				alt19 = 1;
 			}
-			else if ((LA17_1==QUOTED_TEXT))
+			else if ((LA19_1==QUOTED_TEXT))
 			{
-				alt17 = 2;
+				alt19 = 2;
 			}
 			else
 			{
-				NoViableAltException nvae = new NoViableAltException("", 17, 0, input, 1);
+				NoViableAltException nvae = new NoViableAltException("", 19, 0, input, 1);
 				DebugRecognitionException(nvae);
 				throw nvae;
 			}
-			} finally { DebugExitDecision(17); }
-			switch (alt17)
+			} finally { DebugExitDecision(19); }
+			switch (alt19)
 			{
 			case 1:
 				DebugEnterAlt(1);
-				// ADL.g:86:7: id1= ID ( DOT id2= ID )*
+				// ADL.g:98:7: id1= ID ( DOT id2= ID )*
 				{
-				DebugLocation(86, 10);
-				id1=(IToken)Match(input,ID,Follow._ID_in_attrType512); 
-				DebugLocation(86, 14);
+				DebugLocation(98, 10);
+				id1=(IToken)Match(input,ID,Follow._ID_in_attrType602); 
+				DebugLocation(98, 14);
 				 r = (id1!=null?id1.Text:default(string)); 
-				DebugLocation(86, 34);
-				// ADL.g:86:34: ( DOT id2= ID )*
-				try { DebugEnterSubRule(16);
+				DebugLocation(98, 34);
+				// ADL.g:98:34: ( DOT id2= ID )*
+				try { DebugEnterSubRule(18);
 				while (true)
 				{
-					int alt16=2;
-					try { DebugEnterDecision(16, false);
-					int LA16_1 = input.LA(1);
+					int alt18=2;
+					try { DebugEnterDecision(18, false);
+					int LA18_1 = input.LA(1);
 
-					if ((LA16_1==DOT))
+					if ((LA18_1==DOT))
 					{
-						alt16 = 1;
+						alt18 = 1;
 					}
 
 
-					} finally { DebugExitDecision(16); }
-					switch ( alt16 )
+					} finally { DebugExitDecision(18); }
+					switch ( alt18 )
 					{
 					case 1:
 						DebugEnterAlt(1);
-						// ADL.g:86:35: DOT id2= ID
+						// ADL.g:98:35: DOT id2= ID
 						{
-						DebugLocation(86, 35);
-						Match(input,DOT,Follow._DOT_in_attrType517); 
-						DebugLocation(86, 42);
-						id2=(IToken)Match(input,ID,Follow._ID_in_attrType521); 
-						DebugLocation(86, 46);
+						DebugLocation(98, 35);
+						Match(input,DOT,Follow._DOT_in_attrType607); 
+						DebugLocation(98, 42);
+						id2=(IToken)Match(input,ID,Follow._ID_in_attrType611); 
+						DebugLocation(98, 46);
 						 r = r + "." + (id2!=null?id2.Text:default(string)); 
 
 						}
 						break;
 
 					default:
-						goto loop16;
+						goto loop18;
 					}
 				}
 
-				loop16:
+				loop18:
 					;
 
-				} finally { DebugExitSubRule(16); }
+				} finally { DebugExitSubRule(18); }
 
 
 				}
 				break;
 			case 2:
 				DebugEnterAlt(2);
-				// ADL.g:87:7: QUOTED_TEXT
+				// ADL.g:99:7: QUOTED_TEXT
 				{
-				DebugLocation(87, 7);
-				QUOTED_TEXT17=(IToken)Match(input,QUOTED_TEXT,Follow._QUOTED_TEXT_in_attrType533); 
-				DebugLocation(87, 19);
-				 r = (QUOTED_TEXT17!=null?QUOTED_TEXT17.Text:default(string)).Substring(1, (QUOTED_TEXT17!=null?QUOTED_TEXT17.Text:default(string)).Length - 2); 
+				DebugLocation(99, 7);
+				QUOTED_TEXT21=(IToken)Match(input,QUOTED_TEXT,Follow._QUOTED_TEXT_in_attrType623); 
+				DebugLocation(99, 19);
+				 r = (QUOTED_TEXT21!=null?QUOTED_TEXT21.Text:default(string)).Substring(1, (QUOTED_TEXT21!=null?QUOTED_TEXT21.Text:default(string)).Length - 2); 
 
 				}
 				break;
@@ -1470,11 +1651,11 @@ public partial class ADLParser : Antlr.Runtime.Parser
 		}
 		finally
 		{
-			TraceOut("attrType", 13);
-			LeaveRule("attrType", 13);
+			TraceOut("attrType", 15);
+			LeaveRule("attrType", 15);
 			LeaveRule_attrType();
 		}
-		DebugLocation(87, 88);
+		DebugLocation(99, 88);
 		} finally { DebugExitRule(GrammarFileName, "attrType"); }
 		return r;
 
@@ -1486,58 +1667,68 @@ public partial class ADLParser : Antlr.Runtime.Parser
 	#region Follow sets
 	private static class Follow
 	{
-		public static readonly BitSet _namespaceDecl_in_program57 = new BitSet(new ulong[]{0x201000UL});
-		public static readonly BitSet _walkerDecl_in_program67 = new BitSet(new ulong[]{0x1000UL});
-		public static readonly BitSet _node_in_program78 = new BitSet(new ulong[]{0x0UL});
-		public static readonly BitSet _EOF_in_program97 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _NAMESPACE_in_namespaceDecl118 = new BitSet(new ulong[]{0x1000UL});
-		public static readonly BitSet _ID_in_namespaceDecl122 = new BitSet(new ulong[]{0x100400UL});
-		public static readonly BitSet _DOT_in_namespaceDecl127 = new BitSet(new ulong[]{0x1000UL});
-		public static readonly BitSet _ID_in_namespaceDecl131 = new BitSet(new ulong[]{0x100400UL});
-		public static readonly BitSet _SEMI_in_namespaceDecl137 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _WALKER_in_walkerDecl153 = new BitSet(new ulong[]{0x1000UL});
-		public static readonly BitSet _ID_in_walkerDecl155 = new BitSet(new ulong[]{0x100000UL});
-		public static readonly BitSet _SEMI_in_walkerDecl157 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _nodeVariants_in_node184 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _nodeConcrete_in_node190 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ID_in_nodeVariants212 = new BitSet(new ulong[]{0x800UL});
-		public static readonly BitSet _EQ_in_nodeVariants214 = new BitSet(new ulong[]{0x1000UL});
-		public static readonly BitSet _nodeVariant_in_nodeVariants224 = new BitSet(new ulong[]{0x120200UL});
-		public static readonly BitSet _PIPE_in_nodeVariants229 = new BitSet(new ulong[]{0x1000UL});
-		public static readonly BitSet _nodeVariant_in_nodeVariants233 = new BitSet(new ulong[]{0x120200UL});
-		public static readonly BitSet _common_attributes_in_nodeVariants243 = new BitSet(new ulong[]{0x100000UL});
-		public static readonly BitSet _SEMI_in_nodeVariants256 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ID_in_nodeVariant272 = new BitSet(new ulong[]{0x10000UL});
-		public static readonly BitSet _OPEN_in_nodeVariant274 = new BitSet(new ulong[]{0x1040UL});
-		public static readonly BitSet _fields_in_nodeVariant276 = new BitSet(new ulong[]{0x40UL});
-		public static readonly BitSet _CLOSE_in_nodeVariant279 = new BitSet(new ulong[]{0x22UL});
-		public static readonly BitSet _attributes_in_nodeVariant281 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ID_in_nodeConcrete303 = new BitSet(new ulong[]{0x800UL});
-		public static readonly BitSet _EQ_in_nodeConcrete305 = new BitSet(new ulong[]{0x101020UL});
-		public static readonly BitSet _fields_in_nodeConcrete307 = new BitSet(new ulong[]{0x100020UL});
-		public static readonly BitSet _attributes_in_nodeConcrete310 = new BitSet(new ulong[]{0x100000UL});
-		public static readonly BitSet _SEMI_in_nodeConcrete318 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _field_in_fields345 = new BitSet(new ulong[]{0x82UL});
-		public static readonly BitSet _COMMA_in_fields350 = new BitSet(new ulong[]{0x1000UL});
-		public static readonly BitSet _field_in_fields354 = new BitSet(new ulong[]{0x82UL});
-		public static readonly BitSet _ATTRIBUTES_in_attributes379 = new BitSet(new ulong[]{0x81000UL});
-		public static readonly BitSet _attributeDecl_in_attributes383 = new BitSet(new ulong[]{0x82UL});
-		public static readonly BitSet _COMMA_in_attributes388 = new BitSet(new ulong[]{0x81000UL});
-		public static readonly BitSet _attributeDecl_in_attributes392 = new BitSet(new ulong[]{0x82UL});
-		public static readonly BitSet _COMMON_ATTRIBUTES_in_common_attributes417 = new BitSet(new ulong[]{0x81000UL});
-		public static readonly BitSet _attributeDecl_in_common_attributes421 = new BitSet(new ulong[]{0x82UL});
-		public static readonly BitSet _COMMA_in_common_attributes426 = new BitSet(new ulong[]{0x81000UL});
-		public static readonly BitSet _attributeDecl_in_common_attributes430 = new BitSet(new ulong[]{0x82UL});
-		public static readonly BitSet _ID_in_field456 = new BitSet(new ulong[]{0x41012UL});
-		public static readonly BitSet _QUESTION_in_field461 = new BitSet(new ulong[]{0x1002UL});
-		public static readonly BitSet _ASTERISK_in_field465 = new BitSet(new ulong[]{0x1002UL});
-		public static readonly BitSet _ID_in_field471 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _attrType_in_attributeDecl490 = new BitSet(new ulong[]{0x1000UL});
-		public static readonly BitSet _ID_in_attributeDecl492 = new BitSet(new ulong[]{0x2UL});
-		public static readonly BitSet _ID_in_attrType512 = new BitSet(new ulong[]{0x402UL});
-		public static readonly BitSet _DOT_in_attrType517 = new BitSet(new ulong[]{0x1000UL});
-		public static readonly BitSet _ID_in_attrType521 = new BitSet(new ulong[]{0x402UL});
-		public static readonly BitSet _QUOTED_TEXT_in_attrType533 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _namespaceDecl_in_program57 = new BitSet(new ulong[]{0x40UL});
+		public static readonly BitSet _baseClassDecl_in_program66 = new BitSet(new ulong[]{0x1102000UL});
+		public static readonly BitSet _walkerDecl_in_program75 = new BitSet(new ulong[]{0x102000UL});
+		public static readonly BitSet _printerDecl_in_program86 = new BitSet(new ulong[]{0x2000UL});
+		public static readonly BitSet _node_in_program97 = new BitSet(new ulong[]{0x0UL});
+		public static readonly BitSet _EOF_in_program116 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _NAMESPACE_in_namespaceDecl137 = new BitSet(new ulong[]{0x2000UL});
+		public static readonly BitSet _ID_in_namespaceDecl141 = new BitSet(new ulong[]{0x800800UL});
+		public static readonly BitSet _DOT_in_namespaceDecl146 = new BitSet(new ulong[]{0x2000UL});
+		public static readonly BitSet _ID_in_namespaceDecl150 = new BitSet(new ulong[]{0x800800UL});
+		public static readonly BitSet _SEMI_in_namespaceDecl156 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _BASE_CLASS_in_baseClassDecl172 = new BitSet(new ulong[]{0x2000UL});
+		public static readonly BitSet _ID_in_baseClassDecl174 = new BitSet(new ulong[]{0x800000UL});
+		public static readonly BitSet _SEMI_in_baseClassDecl176 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _WALKER_in_walkerDecl203 = new BitSet(new ulong[]{0x2000UL});
+		public static readonly BitSet _ID_in_walkerDecl205 = new BitSet(new ulong[]{0x800000UL});
+		public static readonly BitSet _SEMI_in_walkerDecl207 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _PRINTER_in_printerDecl234 = new BitSet(new ulong[]{0x2000UL});
+		public static readonly BitSet _ID_in_printerDecl238 = new BitSet(new ulong[]{0x2000UL});
+		public static readonly BitSet _ID_in_printerDecl242 = new BitSet(new ulong[]{0x800000UL});
+		public static readonly BitSet _SEMI_in_printerDecl244 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _nodeVariants_in_node271 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _nodeConcrete_in_node277 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ID_in_nodeVariants299 = new BitSet(new ulong[]{0x1000UL});
+		public static readonly BitSet _EQ_in_nodeVariants301 = new BitSet(new ulong[]{0x2000UL});
+		public static readonly BitSet _nodeVariant_in_nodeVariants311 = new BitSet(new ulong[]{0x840400UL});
+		public static readonly BitSet _PIPE_in_nodeVariants316 = new BitSet(new ulong[]{0x2000UL});
+		public static readonly BitSet _nodeVariant_in_nodeVariants320 = new BitSet(new ulong[]{0x840400UL});
+		public static readonly BitSet _common_attributes_in_nodeVariants330 = new BitSet(new ulong[]{0x800000UL});
+		public static readonly BitSet _SEMI_in_nodeVariants343 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ID_in_nodeVariant359 = new BitSet(new ulong[]{0x20000UL});
+		public static readonly BitSet _OPEN_in_nodeVariant361 = new BitSet(new ulong[]{0x2080UL});
+		public static readonly BitSet _fields_in_nodeVariant363 = new BitSet(new ulong[]{0x80UL});
+		public static readonly BitSet _CLOSE_in_nodeVariant366 = new BitSet(new ulong[]{0x22UL});
+		public static readonly BitSet _attributes_in_nodeVariant368 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ID_in_nodeConcrete390 = new BitSet(new ulong[]{0x1000UL});
+		public static readonly BitSet _EQ_in_nodeConcrete392 = new BitSet(new ulong[]{0x802020UL});
+		public static readonly BitSet _fields_in_nodeConcrete394 = new BitSet(new ulong[]{0x800020UL});
+		public static readonly BitSet _attributes_in_nodeConcrete397 = new BitSet(new ulong[]{0x800000UL});
+		public static readonly BitSet _SEMI_in_nodeConcrete405 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _field_in_fields432 = new BitSet(new ulong[]{0x102UL});
+		public static readonly BitSet _COMMA_in_fields437 = new BitSet(new ulong[]{0x2000UL});
+		public static readonly BitSet _field_in_fields441 = new BitSet(new ulong[]{0x102UL});
+		public static readonly BitSet _ATTRIBUTES_in_attributes466 = new BitSet(new ulong[]{0x482000UL});
+		public static readonly BitSet _attributeDecl_in_attributes470 = new BitSet(new ulong[]{0x102UL});
+		public static readonly BitSet _COMMA_in_attributes475 = new BitSet(new ulong[]{0x482000UL});
+		public static readonly BitSet _attributeDecl_in_attributes479 = new BitSet(new ulong[]{0x102UL});
+		public static readonly BitSet _COMMON_ATTRIBUTES_in_common_attributes504 = new BitSet(new ulong[]{0x482000UL});
+		public static readonly BitSet _attributeDecl_in_common_attributes508 = new BitSet(new ulong[]{0x102UL});
+		public static readonly BitSet _COMMA_in_common_attributes513 = new BitSet(new ulong[]{0x482000UL});
+		public static readonly BitSet _attributeDecl_in_common_attributes517 = new BitSet(new ulong[]{0x102UL});
+		public static readonly BitSet _ID_in_field543 = new BitSet(new ulong[]{0x202012UL});
+		public static readonly BitSet _QUESTION_in_field548 = new BitSet(new ulong[]{0x2002UL});
+		public static readonly BitSet _ASTERISK_in_field552 = new BitSet(new ulong[]{0x2002UL});
+		public static readonly BitSet _ID_in_field558 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _PRINTED_in_attributeDecl577 = new BitSet(new ulong[]{0x402000UL});
+		public static readonly BitSet _attrType_in_attributeDecl580 = new BitSet(new ulong[]{0x2000UL});
+		public static readonly BitSet _ID_in_attributeDecl582 = new BitSet(new ulong[]{0x2UL});
+		public static readonly BitSet _ID_in_attrType602 = new BitSet(new ulong[]{0x802UL});
+		public static readonly BitSet _DOT_in_attrType607 = new BitSet(new ulong[]{0x2000UL});
+		public static readonly BitSet _ID_in_attrType611 = new BitSet(new ulong[]{0x802UL});
+		public static readonly BitSet _QUOTED_TEXT_in_attrType623 = new BitSet(new ulong[]{0x2UL});
 	}
 	#endregion Follow sets
 }

@@ -33,11 +33,13 @@ namespace adt
         {
             var lexer = new ADLLexer(new ANTLRStringStream(@"
 @namespace Foo.Bar.Baz;
+@baseclass BaseNode;
 @walker BaseWalker;
+@printer AstPrinter foo;
 
-foo = bar(foo x) @attributes string y | quux() @common_attributes ""List<int>"" nums;
+foo = bar(foo x) @attributes @printed string y | quux() @common_attributes @printed ""List<int>"" nums;
 
-baz = str, id e1 @attributes double w;
+baz = str, id e1 @attributes @printed double w;
 
 statement = Select(selectStatement) | Update(updateStatement) | Delete(deleteStatement) | Insert(insertStatement);
 

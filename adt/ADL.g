@@ -15,7 +15,9 @@ using adt.ADL;
 
 public program returns [ProgramDecl r]
     : namespaceDecl  { $r = new ProgramDecl { ns = $namespaceDecl.r }; }
+    baseClassDecl { $r.baseClass = $baseClassDecl.r; }
     (walkerDecl { $r.walker = $walkerDecl.r; })?
+    (printerDecl { $r.printer = $printerDecl.r; })?
     (node
         {
             $r.nodes.Add($node.r);
@@ -26,9 +28,19 @@ namespaceDecl returns [NamespaceDecl r]
 @init { $r = new NamespaceDecl(); }
     : NAMESPACE id1=ID { $r.ids.Add($id1.text); } (DOT id2=ID { $r.ids.Add($id2.text); })* SEMI;
 
+baseClassDecl returns [BaseClassDecl r]
+    : BASE_CLASS ID SEMI
+    { $r = new BaseClassDecl { name = $ID.text }; }
+    ;
+
 walkerDecl returns [WalkerDecl r]
     : WALKER ID SEMI
     { $r = new WalkerDecl { name = $ID.text }; }
+    ;
+
+printerDecl returns [PrinterDecl r]
+    : PRINTER name=ID root=ID SEMI
+    { $r = new PrinterDecl { name = $name.text, root = $root.text }; }
     ;
 
 node returns [NodeDecl r]
@@ -80,7 +92,7 @@ field returns [FieldDecl r]
     };
 
 attributeDecl returns [AttributeDecl r]
-    : attrType ID { $r = new AttributeDecl { id = $ID.text, type = $attrType.r }; };
+    : PRINTED? attrType ID { $r = new AttributeDecl { id = $ID.text, type = $attrType.r, printed = $PRINTED != null }; };
 
 attrType returns [string r]
     : id1=ID { $r = $id1.text; } (DOT id2=ID { $r = $r + "." + $id2.text; })*
@@ -91,9 +103,12 @@ QUOTED_TEXT
 
 NAMESPACE: '@namespace';
 WALKER: '@walker';
+PRINTER: '@printer';
+BASE_CLASS: '@baseclass';
 
 ATTRIBUTES: '@attributes';
 COMMON_ATTRIBUTES: '@common_attributes';
+PRINTED: '@printed';
     
 QUESTION: '?';
 ASTERISK: '*';
