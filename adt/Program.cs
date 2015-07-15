@@ -35,19 +35,30 @@ namespace adt
 @namespace Foo.Bar.Baz;
 @baseclass BaseNode;
 @walker BaseWalker;
-@printer AstPrinter foo;
+@printer AstPrinter Statement;
 
-foo = bar(foo x) @attributes @printed string y | quux() @common_attributes @printed ""List<int>"" nums;
+Statement = Select(SelectStatement) | Update(UpdateStatement) | Delete(DeleteStatement) | Insert(InsertStatement);
 
-baz = str, id e1 @attributes @printed double w;
+SelectStatement = Query;
+UpdateStatement = ;
+DeleteStatement = ;
+InsertStatement = ;
 
-statement = Select(selectStatement) | Update(updateStatement) | Delete(deleteStatement) | Insert(insertStatement);
+Query = FromClause, SelectClause, WhereClause?;
 
-selectStatement = query @attributes ""List<QS>"" QuerySources;
+FromClause = TableRef* Sources;
 
-path1 = Foo*;
+TableRef = Id Name, Id? Alias;
 
-path2 = StringPath() @attributes string val | IdPath(Id* identifiers);
+SelectClause = AliasedExpr* Exprs;
+
+WhereClause = Expr;
+
+AliasedExpr = Expr, Id? Alias;
+
+Expr = IdExpr(Id) | DotExpr(Expr, Id);
+
+Id = @attributes @printed string value, int length;
 "));
 
 

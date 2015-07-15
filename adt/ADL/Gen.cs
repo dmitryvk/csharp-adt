@@ -239,6 +239,7 @@ namespace adt.ADL
                 ctx.Appendfnl("}}");
             }
             genReplaceChildNode(ctx, variant.fields);
+            genToString(ctx, variant.id, variant.fields, nodeVariantsDecl.attributes.Concat(variant.attributes).ToList());
             ctx.DecreaseIndent();
             ctx.Appendfnl("}}");
             ctx.NewLine();
@@ -272,7 +273,12 @@ namespace adt.ADL
                 ctx.IncreaseIndent();
                 if (field.many)
                 {
+                    ctx.Appendfnl("if (oldNode.Parent == this)");
+                    ctx.Appendfnl("{{");
+                    ctx.IncreaseIndent();
                     ctx.Appendfnl("oldNode.Parent = null;");
+                    ctx.DecreaseIndent();
+                    ctx.Appendfnl("}}");
                     ctx.Appendfnl("this.{0}[__idx] = ({1})newNode;", name, field.type);
                     ctx.Appendfnl("newNode.Parent = this;");
                 }
@@ -335,14 +341,28 @@ namespace adt.ADL
                             ctx.Appendfnl("{{");
                             ctx.IncreaseIndent();
                             {
-                                ctx.Appendfnl("__item.Parent = null;");
+                                ctx.Appendfnl("if (__item.Parent == this)");
+                                ctx.Appendfnl("{{");
+                                ctx.IncreaseIndent();
+                                {
+                                    ctx.Appendfnl("__item.Parent = null;");
+                                }
+                                ctx.DecreaseIndent();
+                                ctx.Appendfnl("}}");
                             }
                             ctx.DecreaseIndent();
                             ctx.Appendfnl("}}");
                         }
                         else
                         {
-                            ctx.Appendfnl(" __{0}.Parent = null;", name);
+                            ctx.Appendfnl("if ( __{0}.Parent == this)", name);
+                            ctx.Appendfnl("{{");
+                            ctx.IncreaseIndent();
+                            {
+                                ctx.Appendfnl(" __{0}.Parent = null;", name);
+                            }
+                            ctx.DecreaseIndent();
+                            ctx.Appendfnl("}}");
                         }
                     }
                     ctx.DecreaseIndent();
@@ -430,6 +450,109 @@ namespace adt.ADL
                 ctx.Appendfnl("}}");
             }
             genReplaceChildNode(ctx, nodeConcreteDecl.fields);
+            genToString(ctx, nodeConcreteDecl.id, nodeConcreteDecl.fields, nodeConcreteDecl.attributes);
+            ctx.DecreaseIndent();
+            ctx.Appendfnl("}}");
+            ctx.NewLine();
+        }
+
+        private static void genToString(GenContext ctx, string id, List<FieldDecl> fields, List<AttributeDecl> attributes)
+        {
+            ctx.Appendfnl("public override string ToString()");
+            ctx.Appendfnl("{{");
+            ctx.IncreaseIndent();
+            {
+                var printedAttributes = attributes.Where(x => x.printed).ToList();
+                var count = fields.Count + printedAttributes.Count;
+                ctx.Appendfnl("var result = new global::System.Text.StringBuilder();");
+                ctx.Appendfnl("var __first = false;");
+                //StringBuilder sb;
+                //sb.Append(
+                ctx.Appendfnl("result.Append(\"{0}(\");", id);
+                var first = true;
+                foreach (var field in fields)
+                {
+                    if (first)
+                    {
+                        ctx.Appendfnl("result.Append(\"\\n  \");");
+                    }
+                    else
+                    {
+                        ctx.Appendfnl("result.Append(\",\\n  \");");
+                    }
+                    first = false;
+                    if (field.many)
+                    {
+                        ctx.Appendfnl("result.Append(\"[\");");
+                        ctx.Appendfnl("__first = true;");
+                        ctx.Appendfnl("foreach (var __item in this.{0})", field.id);
+                        ctx.Appendfnl("{{");
+                        ctx.IncreaseIndent();
+                        {
+                            ctx.Appendfnl("if (!__first) result.Append(\",\");");
+                            ctx.Appendfnl("result.Append(\"\\n    \");");
+                            ctx.Appendfnl("__first = false;");
+                            ctx.Appendfnl("result.Append(__item.ToString().Replace(\"\\n\", \"\\n    \"));");
+                        }
+                        ctx.DecreaseIndent();
+                        ctx.Appendfnl("}}");
+                        ctx.Appendfnl("if (!__first) result.Append(\"\\n  \");");
+                        ctx.Appendfnl("result.Append(\"]\");");
+                    }
+                    else
+                    {
+                        ctx.Appendfnl("if (this.{0} == null)", field.id);
+                        ctx.Appendfnl("{{");
+                        ctx.IncreaseIndent();
+                        {
+                            ctx.Appendfnl("result.Append(\"null\");");
+                        }
+                        ctx.DecreaseIndent();
+                        ctx.Appendfnl("}}");
+                        ctx.Appendfnl("else");
+                        ctx.Appendfnl("{{");
+                        ctx.IncreaseIndent();
+                        {
+                            ctx.Appendfnl("result.Append(this.{0}.ToString().Replace(\"\\n\", \"\\n  \"));", field.id);
+                        }
+                        ctx.DecreaseIndent();
+                        ctx.Appendfnl("}}");
+                    }
+                }
+                foreach (var attr in printedAttributes)
+                {
+                    if (count > 1)
+                    {
+                        if (first)
+                        {
+                            ctx.Appendfnl("result.Append(\"\\n  \");");
+                        }
+                        else
+                        {
+                            ctx.Appendfnl("result.Append(\",\\n  \");");
+                        }
+                    }
+                    first = false;
+                    ctx.Appendfnl("if ((object)this.{0} == null)", attr.id);
+                    ctx.Appendfnl("{{");
+                    ctx.IncreaseIndent();
+                    {
+                        ctx.Appendfnl("result.Append(\"null\");");
+                    }
+                    ctx.DecreaseIndent();
+                    ctx.Appendfnl("}}");
+                    ctx.Appendfnl("else");
+                    ctx.Appendfnl("{{");
+                    ctx.IncreaseIndent();
+                    {
+                        ctx.Appendfnl("result.Append(this.{0}.ToString().Replace(\"\\n\", \"\\n  \"));", attr.id);
+                    }
+                    ctx.DecreaseIndent();
+                    ctx.Appendfnl("}}");
+                }
+                ctx.Appendfnl("result.Append(\")\");");
+                ctx.Appendfnl("return result.ToString();");
+            }
             ctx.DecreaseIndent();
             ctx.Appendfnl("}}");
             ctx.NewLine();
