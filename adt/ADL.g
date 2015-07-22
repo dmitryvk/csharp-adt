@@ -48,12 +48,24 @@ node returns [NodeDecl r]
     
 nodeVariants returns [NodeVariantsDecl r]
     : ID EQ { $r = new NodeVariantsDecl { id = $ID.text }; }
+    (
+        c=commonFields
+        {
+            $r.commonFields = $c.r;
+        }
+    )?
     v1=nodeVariant { $r.variants.Add($v1.r); } (PIPE v2=nodeVariant { $r.variants.Add($v2.r); })*
     common_attributes?
     {
         $r.attributes = $common_attributes.r ?? new List<AttributeDecl>();
     }
     SEMI;
+
+commonFields returns [List<FieldDecl> r]
+    : COMMON_FIELDS OPEN fields? CLOSE
+    {
+        $r = $fields.r ?? new List<FieldDecl>();
+    };
 
 nodeVariant returns [NodeVariantDecl r]
     : ID OPEN fields? CLOSE attributes?
@@ -106,6 +118,7 @@ WALKER: '@walker';
 PRINTER: '@printer';
 BASE_CLASS: '@baseclass';
 
+COMMON_FIELDS: '@common_fields';
 ATTRIBUTES: '@attributes';
 COMMON_ATTRIBUTES: '@common_attributes';
 PRINTED: '@printed';

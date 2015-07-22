@@ -120,6 +120,10 @@ namespace adt.ADL
             {
                 ctx.Appendfnl("public {0} {1} {{ get; set; }}", attr.type, attr.id);
             }
+            foreach (var field in nodeVariantsDecl.commonFields)
+            {
+                GenerateField(ctx, field);
+            }
             ctx.DecreaseIndent();
             ctx.Appendfnl("}}");
 
@@ -217,15 +221,16 @@ namespace adt.ADL
                 }
                 ctx.Appendfnl("}}");
             }
-            if (variant.fields.Count > 0)
+            var fields = nodeVariantsDecl.commonFields.Concat(variant.fields).ToList();
+            if (fields.Count > 0)
             {
                 // constructor with parameters
-                var fieldsArgs = variant.fields.Select(x => string.Format("{0} {1}_p", FieldToCsharpType(ctx, x), x.id));
+                var fieldsArgs = fields.Select(x => string.Format("{0} {1}_p", FieldToCsharpType(ctx, x), x.id));
                 ctx.Appendfnl("public {0}({1})", variant.id, string.Join(", ", fieldsArgs));
                 ctx.Appendfnl("{{");
                 ctx.IncreaseIndent();
 
-                foreach (var field in variant.fields)
+                foreach (var field in fields)
                 {
                     var expr = field.id + "_p";
                     if (field.many)
@@ -238,8 +243,8 @@ namespace adt.ADL
                 ctx.DecreaseIndent();
                 ctx.Appendfnl("}}");
             }
-            genReplaceChildNode(ctx, variant.fields);
-            genToString(ctx, variant.id, variant.fields, nodeVariantsDecl.attributes.Concat(variant.attributes).ToList());
+            genReplaceChildNode(ctx, fields);
+            genToString(ctx, variant.id, fields, nodeVariantsDecl.attributes.Concat(variant.attributes).ToList());
             ctx.DecreaseIndent();
             ctx.Appendfnl("}}");
             ctx.NewLine();

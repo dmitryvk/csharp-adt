@@ -45,6 +45,7 @@ namespace adt.ADL
     {
         public string id;
         public List<NodeVariantDecl> variants = new List<NodeVariantDecl>();
+        public List<FieldDecl> commonFields = new List<FieldDecl>();
     }
 
     public class NodeVariantDecl

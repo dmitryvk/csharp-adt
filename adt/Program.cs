@@ -37,7 +37,8 @@ namespace adt
 @walker BaseWalker;
 @printer AstPrinter Statement;
 
-Statement = Select(SelectStatement) | Update(UpdateStatement) | Delete(DeleteStatement) | Insert(InsertStatement);
+Statement = @common_fields(Id StatementId)
+Select(SelectStatement) | Update(UpdateStatement) | Delete(DeleteStatement) | Insert(InsertStatement);
 
 SelectStatement = Query;
 UpdateStatement = ;
