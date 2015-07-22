@@ -51,10 +51,16 @@ nodeVariants returns [NodeVariantsDecl r]
     (
         c=commonFields
         {
-            $r.commonFields = $c.r;
+            $r.commonFieldsBefore = $c.r;
         }
     )?
     v1=nodeVariant { $r.variants.Add($v1.r); } (PIPE v2=nodeVariant { $r.variants.Add($v2.r); })*
+    (
+        c=commonFields
+        {
+            $r.commonFieldsAfter = $c.r;
+        }
+    )?
     common_attributes?
     {
         $r.attributes = $common_attributes.r ?? new List<AttributeDecl>();

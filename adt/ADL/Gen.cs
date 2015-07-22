@@ -120,7 +120,7 @@ namespace adt.ADL
             {
                 ctx.Appendfnl("public {0} {1} {{ get; set; }}", attr.type, attr.id);
             }
-            foreach (var field in nodeVariantsDecl.commonFields)
+            foreach (var field in nodeVariantsDecl.commonFieldsBefore.Concat(nodeVariantsDecl.commonFieldsAfter))
             {
                 GenerateField(ctx, field);
             }
@@ -221,7 +221,7 @@ namespace adt.ADL
                 }
                 ctx.Appendfnl("}}");
             }
-            var fields = nodeVariantsDecl.commonFields.Concat(variant.fields).ToList();
+            var fields = nodeVariantsDecl.commonFieldsBefore.Concat(variant.fields).Concat(nodeVariantsDecl.commonFieldsAfter).ToList();
             if (fields.Count > 0)
             {
                 // constructor with parameters

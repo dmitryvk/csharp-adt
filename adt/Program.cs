@@ -38,7 +38,8 @@ namespace adt
 @printer AstPrinter Statement;
 
 Statement = @common_fields(Id StatementId)
-Select(SelectStatement) | Update(UpdateStatement) | Delete(DeleteStatement) | Insert(InsertStatement);
+Select(SelectStatement) | Update(UpdateStatement) | Delete(DeleteStatement) | Insert(InsertStatement)
+@common_fields(Id ResultAlias);
 
 SelectStatement = Query;
 UpdateStatement = ;
