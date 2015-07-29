@@ -224,11 +224,12 @@ namespace adt.ADL
             {
                 ctx.Appendfnl("public {0} {1} {{ get; set; }}", attr.type, attr.id);
             }
+            var fields = nodeVariantsDecl.commonFieldsBefore.Concat(variant.fields).Concat(nodeVariantsDecl.commonFieldsAfter).ToList();
             {
                 // default constructor
                 ctx.Appendfnl("public {0}()", variant.id);
                 ctx.Appendfnl("{{");
-                foreach (var field in variant.fields)
+                foreach (var field in fields)
                 {
                     ctx.IncreaseIndent();
                     if (field.many)
@@ -239,7 +240,6 @@ namespace adt.ADL
                 }
                 ctx.Appendfnl("}}");
             }
-            var fields = nodeVariantsDecl.commonFieldsBefore.Concat(variant.fields).Concat(nodeVariantsDecl.commonFieldsAfter).ToList();
             if (fields.Count > 0)
             {
                 // constructor with parameters
@@ -677,17 +677,18 @@ namespace adt.ADL
 
             foreach (var variant in node.variants)
             {
-                genWalkerVariants(ctx, variant);
+                genWalkerVariants(ctx, node, variant);
             }
         }
 
-        private static void genWalkerVariants(GenContext ctx, NodeVariantDecl variant)
+        private static void genWalkerVariants(GenContext ctx, NodeVariantsDecl variants, NodeVariantDecl variant)
         {
             ctx.Appendfnl("public virtual void walk{0}({1} __node)", variant.id, ToNs(ctx, variant.id));
             ctx.Appendfnl("{{");
             ctx.IncreaseIndent();
             var nodeName = variant.id;
-            foreach (var field in variant.fields)
+            var fields = variants.commonFieldsBefore.Concat(variant.fields).Concat(variants.commonFieldsAfter).ToList();
+            foreach (var field in fields)
             {
                 genWalkerField(ctx, nodeName, field);
             }
