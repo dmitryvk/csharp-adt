@@ -135,8 +135,8 @@ namespace adt.ADL
             ctx.Appendfnl("public static class {0}_MatcherExtensions", nodeVariantsDecl.id);
             ctx.Appendfnl("{{");
             ctx.IncreaseIndent();
-            getMatcher(ctx, nodeVariantsDecl, false);
-            getMatcher(ctx, nodeVariantsDecl, true);
+            genMatcher(ctx, nodeVariantsDecl, false);
+            genMatcher(ctx, nodeVariantsDecl, true);
             ctx.DecreaseIndent();
             ctx.Appendfnl("}}");
             ctx.NewLine();
@@ -147,7 +147,7 @@ namespace adt.ADL
             return string.Format("global::{0}.{1}", string.Join(".", ctx.prg.ns.ids), type);
         }
 
-        private static void getMatcher(GenContext ctx, NodeVariantsDecl nodeVariantsDecl, bool isFn)
+        private static void genMatcher(GenContext ctx, NodeVariantsDecl nodeVariantsDecl, bool isFn)
         {
             var args = nodeVariantsDecl.variants
                 .Select(x =>
