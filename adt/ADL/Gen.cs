@@ -124,6 +124,12 @@ namespace adt.ADL
             {
                 GenerateField(ctx, field);
             }
+
+            foreach (var variant in nodeVariantsDecl.variants)
+            {
+                genExpectMethod(ctx, nodeVariantsDecl, variant);
+            }
+
             ctx.DecreaseIndent();
             ctx.Appendfnl("}}");
 
@@ -145,6 +151,18 @@ namespace adt.ADL
         private static string ToNs(GenContext ctx, string type)
         {
             return string.Format("global::{0}.{1}", string.Join(".", ctx.prg.ns.ids), type);
+        }
+
+        private static void genExpectMethod(GenContext ctx, NodeVariantsDecl nodeVariantsDecl, NodeVariantDecl variant)
+        {
+            ctx.Appendfnl("public {0} Expect{1}()", ToNs(ctx, variant.id), variant.id);
+            ctx.Appendfnl("{{");
+            ctx.IncreaseIndent();
+            {
+                ctx.Appendfnl("return ({0})this;", ToNs(ctx, variant.id));
+            }
+            ctx.DecreaseIndent();
+            ctx.Appendfnl("}}");
         }
 
         private static void genMatcher(GenContext ctx, NodeVariantsDecl nodeVariantsDecl, bool isFn)
